@@ -48,7 +48,7 @@ include('log-in.php');
     <body>
         <?php include(INCLUDE_HEADER) ?>
         <div class="content-width clearfix padding-small">
-            <div class="padding-small shadow bg-white">
+            <div class="padding-small shadow bg-white text-centered">
                 <form class="login-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                     <h2>Login</h2>
                     <h4>Employee ID</h4>
