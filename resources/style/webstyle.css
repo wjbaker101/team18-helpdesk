@@ -378,7 +378,9 @@ body > header[role=banner]
 
 body > header[role=banner] .title
 {
-    width: 276px;
+    width: 283px;
+    max-width: 100%;
+    line-height: 1.8em;
 }
 
 body > header[role=banner] .login
@@ -388,7 +390,6 @@ body > header[role=banner] .login
 
 body > header[role=banner] .content
 {
-    line-height: 1em;
     color: #9dacb8;
     vertical-align: middle;
 }
