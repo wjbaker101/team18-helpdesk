@@ -43,47 +43,42 @@ if ($employee === null)
         <?php include(INCLUDE_SCRIPTS) ?>
         
         <script>
-            const getTickets = () =>
-            {
-                const options =
-                {
+            'use strict';
+
+            var getTickets = function getTickets() {
+                var options = {
                     sort: document.querySelector('[name=sorting]:checked').value,
                     descendingOrder: document.querySelector('[name=order]').checked,
                     showPending: document.querySelector('[name=show-pending]').checked,
                     showOpen: document.querySelector('[name=show-open]').checked,
-                    showClosed: document.querySelector('[name=show-closed]').checked,
+                    showClosed: document.querySelector('[name=show-closed]').checked
                 };
-                
-                const http = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
-                
-                http.onreadystatechange = () =>
-                {
-                    if (http.readyState === XMLHttpRequest.DONE)
-                    {
-                        if (http.status === 200)
-                        {
-                            const response = http.responseText;
-                            
+
+                var http = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
+
+                http.onreadystatechange = function () {
+                    if (http.readyState === XMLHttpRequest.DONE) {
+                        if (http.status === 200) {
+                            var response = http.responseText;
+
                             document.querySelector('.tickets-container').innerHTML = response;
                         }
                     }
                 };
-                
-                const parameters = `?sort=${options.sort}&order=${options.descendingOrder}&pending=${options.showPending}&open=${options.showOpen}&closed=${options.showClosed}`;
-                
-                http.open('GET', `get-tickets.php${parameters}`, true);
-                
+
+                var parameters = '?sort=' + options.sort + '&order=' + options.descendingOrder + '&pending=' + options.showPending + '&open=' + options.showOpen + '&closed=' + options.showClosed;
+
+                http.open('GET', 'get-tickets.php' + parameters, true);
+
                 http.send();
             };
-            
+
             window.addEventListener('load', getTickets);
-            
-            window.addEventListener('load', () =>
-            {
-                const ticketInputs = Array.from(document.querySelectorAll('.tickets-input'));
-                
-                ticketInputs.forEach((input) =>
-                {
+
+            window.addEventListener('load', function () {
+                var ticketInputs = Array.from(document.querySelectorAll('.tickets-input'));
+
+                ticketInputs.forEach(function (input) {
                     input.addEventListener('change', getTickets);
                 });
             });
