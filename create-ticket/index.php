@@ -180,13 +180,32 @@ include('create.php');
                             <input class="problem-type-input" type="text" name="problem-type" value="<?php echo htmlspecialchars($_POST['problem-type']); ?>">
                             <?= $messages->problemType ?>
                             <h4><abbr title="Hardware serial ID related to the problem.">Hardware Serial ID</abbr></h4>
-                            <input class="hardware-serial-id-input" type="text" name="hardware-serial-id" value="<?php echo htmlspecialchars($_POST['hardware-serial-id']); ?>">
+                            <input class="hardware-serial-id-input" type="text" name="hardware-serial-id" placeholder="7EIQ-72IU-2YNV-3L4Y" value="<?php echo htmlspecialchars($_POST['hardware-serial-id']); ?>">
                             <?= $messages->hardwareSerialID ?>
-                            <h4><abbr title="Operating System ID related to the problem.">Device Operating System ID</abbr></h4>
-                            <input class="device-operating-system-id-input" type="text" name="os-id" value="<?php echo htmlspecialchars($_POST['os-id']); ?>">
-                            <?= $messages->operatingSystem ?>
-                            <h4><abbr title="Software ID related to the problem.">Software ID</abbr></h4>
-                            <input class="software-id-input" type="text" name="software-id" value="<?php echo htmlspecialchars($_POST['software-id']); ?>">
+                            <div class="column-container">
+                                <div class="column l6 s12">
+                                    <h4><abbr title="The name of the operating system being used.">Device Operating System</abbr></h4>
+                                    <input class="os-input" type="text" name="operating-system" placeholder="Windows 10" value="<?php echo htmlspecialchars($_POST['operating-system']); ?>">
+                                    <?= $messages->operatingSystem ?>
+                                </div>
+                                <div class="column l6 s12">
+                                    <h4><abbr title="The version number of the operating system.">Operating System Version</abbr></h4>
+                                    <input class="os-version-input" type="text" name="os-version" placeholder="5.7.1.0" value="<?php echo htmlspecialchars($_POST['os-version']); ?>">
+                                    <?= $messages->operatingSystem ?>
+                                </div>
+                            </div>
+                            <div class="column-container">
+                                <div class="column l6 s12">
+                                    <h4><abbr title="The name of the software related to the problem.">Software Name</abbr></h4>
+                                    <input class="software-input" type="text" name="software" placeholder="Google Chrome" value="<?php echo htmlspecialchars($_POST['software']); ?>">
+                                    <?= $messages->operatingSystem ?>
+                                </div>
+                                <div class="column l6 s12">
+                                    <h4><abbr title="The version number of the software.">Software Version</abbr></h4>
+                                    <input class="software-version-input" type="text" name="software-version" placeholder="12.3.6.1" value="<?php echo htmlspecialchars($_POST['software-version']); ?>">
+                                    <?= $messages->operatingSystem ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="bg-white shadow padding-small section">
