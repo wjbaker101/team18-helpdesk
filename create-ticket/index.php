@@ -177,7 +177,12 @@ include('create.php');
                         <div class="content-section padding-small">
                             <h2>Problem Information</h2>
                             <h4><abbr title="The type of problem this ticket is categorised as.">Problem Type</abbr></h4>
-                            <input class="problem-type-input" type="text" name="problem-type" value="<?php echo htmlspecialchars($_POST['problem-type']); ?>">
+                            <!--<input class="problem-type-input" type="text" name="problem-type" value="<?php echo htmlspecialchars($_POST['problem-type']); ?>">-->
+                            <select>
+                                <option>Network</option>
+                                <option>Hardware</option>
+                                <option>Software</option>
+                            </select>
                             <?= $messages->problemType ?>
                             <h4><abbr title="Hardware serial ID related to the problem.">Hardware Serial ID</abbr></h4>
                             <input class="hardware-serial-id-input" type="text" name="hardware-serial-id" placeholder="7EIQ-72IU-2YNV-3L4Y" value="<?php echo htmlspecialchars($_POST['hardware-serial-id']); ?>">
