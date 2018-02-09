@@ -32,10 +32,14 @@ Caller.FirstName AS Caller_FirstName,
 Caller.Surname AS Caller_Surname,
 Caller.TelephoneNumber AS Caller_TelephoneNumber
 FROM Tickets AS Ticket
+LEFT JOIN Hardware ON Ticket.HardwareSerialID=Hardware.HardwareSerialID
+LEFT JOIN OperatingSystems ON OperatingSystems.OperatingSystemID=Ticket.OperatingSystemID
+LEFT JOIN Software ON Software.SoftwareID=Ticket.SoftwareID
 LEFT JOIN Resolutions AS Resolution ON Ticket.ResolutionID=Resolution.ResolutionID
 LEFT JOIN Employees AS HelpdeskOperator ON Ticket.HelpdeskOperator=HelpdeskOperator.EmployeeID
 LEFT JOIN Employees AS AssignedSpecialist ON Ticket.AssignedSpecialist=AssignedSpecialist.EmployeeID
 LEFT JOIN Employees AS ResolutionEmployee ON Resolution.EmployeeID=ResolutionEmployee.EmployeeID
+LEFT JOIN Employees AS Caller ON Ticket.CallerID=Caller.EmployeeID
 WHERE Ticket.TicketID={$sqlTicketID}
 GROUP BY Ticket.TicketID";
 
