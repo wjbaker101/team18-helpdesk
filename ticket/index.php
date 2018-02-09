@@ -93,35 +93,47 @@ if (!isset($ticket))
                     </div>
                     <div class="content-section padding-small">
                         <p>
-                            <strong>Problem Type</strong><br>
+                            <strong>Problem Type:</strong>
                             <span><?= $ticket['ProblemType'] ?></span>
                         </p>
+                        <?php if ($ticket['HardwareSerialID'] !== null) { ?>
                         <p>
-                            <strong>Hardware Serial ID</strong><br>
+                            <strong>Hardware Serial ID:</strong>
                             <span><?= $ticket['HardwareSerialID'] ?></span>
                         </p>
+                        <?php } ?>
+                        <?php if ($ticket['OperatingSystemID'] !== null) { ?>
                         <p>
-                            <strong>Operating System ID</strong><br>
-                            <span><?= $ticket['OperatingSystemID'] ?></span>
+                            <strong>Operating System:</strong>
+                            <span><?= $ticket['OS_Name'] ?></span>
                         </p>
+                        <?php } ?>
+                        <?php if ($ticket['Software_Name'] !== null) { ?>
                         <p>
-                            <strong>Software ID</strong><br>
-                            <span><?= $ticket['SoftwareID'] ?></span>
+                            <strong>Software:</strong>
+                            <span><?= $ticket['Software_Name'] ?></span>
                         </p>
+                        <?php } ?>
                     </div>
                     <div class="content-section padding-small">
                         <p>
-                            <strong>Created By</strong><br>
+                            <strong>Opened By:</strong>
                             <span><?= $ticket['HelpdeskOperator_FirstName'] . ' ' . $ticket['HelpdeskOperator_Surname'] ?></span>
                         </p>
                         <p>
-                            <strong>Contact Number</strong><br>
-                            <span><?= $ticket['TelephoneNumber'] ?></span>
+                            <strong>Contact:</strong>
+                            <span><?= $ticket['HelpdeskOperator_TelephoneNumber'] ?></span>
                         </p>
+                    </div>
+                    <div class="content-section padding-small">
                         <?php if ($ticket['AssignedSpecialist'] !== null) { ?>
                         <p>
-                            <strong>Assigned Specialist</strong><br>
+                            <strong>Assigned Specialist:</strong>
                             <span><?= $ticket['AssignedSpecialist_FirstName'] . ' ' . $ticket['AssignedSpecialist_Surname'] ?></span>
+                        </p>
+                        <p>
+                            <strong>Contact:</strong>
+                            <span><?= $ticket['AssignedSpecialist_TelephoneNumber'] ?></span>
                         </p>
                         <?php } ?>
                     </div>
