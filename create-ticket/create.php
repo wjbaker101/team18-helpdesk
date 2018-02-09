@@ -53,18 +53,6 @@ if (!isset($_POST['problem-type']) || strlen($_POST['problem-type']) === 0)
     return;
 }
 
-if (!isset($_POST['hardware-serial-id']) || strlen($_POST['hardware-serial-id']) === 0)
-{
-    $messages->hardwareSerialID = '<p class="text-error">Hardware serial ID cannot be blank.</p>';
-    return;
-}
-
-if (!isset($_POST['os-id']) || strlen($_POST['os-id']) === 0)
-{
-    $messages->operatingSystem = '<p class="text-error">Operating System ID cannot be blank.</p>';
-    return;
-}
-
 require_once(ROOT . '/resources/page/utils/database.php');
 require_once(ROOT . '/resources/page/utils/cleanup-utils.php');
 
@@ -139,14 +127,14 @@ $sqlDescription = getSecureText($_POST['description'], $connection, true);
 $sqlCallerID = getSecureText($_POST['caller-id'], $connection, true);
 $sqlTelephoneNumber = getSecureText($_POST['telephone-number'], $connection, true);
 $sqlProblemType = getSecureText($_POST['problem-type'], $connection, true);
-$sqlSoftwareID = 'null';
+$sqlOperatingSystem = isset($_POST['software']) ? getSecureText($_POST['operating-system'], $connection, true) : 'null';
+$sqlSoftware = isset($_POST['software']) ? getSecureText($_POST['software'], $connection, true) : 'null';
 $sqlHardwareSerialID = getSecureText($_POST['hardware-serial-id'], $connection, true);
-$sqlOperatingSystemID = getSecureText($_POST['os-id'], $connection, true);
 $sqlPriority = getSecureText($_POST['priority-group'], $connection, true);
 
 $fields = 'Summary, Description, EntryDate, CallerID, TelephoneNumber, HelpdeskOperator, AssignedSpecialist, ResolutionID, OperatingSystemID, SoftwareID, HardwareSerialID, ProblemType, Priority';
 
-$values = "'{$sqlSummary}', '{$sqlDescription}', '{$sqlEntryDate}', {$sqlCallerID}, '{$sqlTelephoneNumber}', {$sqlHelpdeskOperator}, {$sqlAssignedSpecialist}, {$sqlResolutionID}, '{$sqlOperatingSystemID}', null, '{$sqlHardwareSerialID}', '{$sqlProblemType}', {$sqlPriority}";
+$values = "'{$sqlSummary}', '{$sqlDescription}', '{$sqlEntryDate}', {$sqlCallerID}, '{$sqlTelephoneNumber}', {$sqlHelpdeskOperator}, {$sqlAssignedSpecialist}, {$sqlResolutionID}, '{$sqlOperatingSystem}', '{$sqlSoftware}', '{$sqlHardwareSerialID}', '{$sqlProblemType}', {$sqlPriority}";
 
 $sql = "INSERT INTO Tickets ({$fields}) VALUES ({$values})";
 
