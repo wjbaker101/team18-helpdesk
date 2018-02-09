@@ -218,7 +218,7 @@ include('create.php');
                             <div class="cell-row">
                                 <h2 class="cell l6 cell-middle">Specialist Information</h2>
                                 <div class="cell l6 cell-middle text-right">
-                                    <input class="specialist-info-enabled" type="checkbox" name="assign-specialist" value="checked" <?php echo isset($_POST['assign-specialist']) ? 'checked' : ''' ?>>
+                                    <input class="specialist-info-enabled" type="checkbox" name="assign-specialist" value="checked" <?php echo isset($_POST['assign-specialist']) ? 'checked' : '' ?>>
                                     <span>Enable</span>
                                 </div>
                             </div>
