@@ -125,8 +125,8 @@ if (!isset($ticket))
                             <span><?= $ticket['HelpdeskOperator_TelephoneNumber'] ?></span>
                         </p>
                     </div>
+                    <?php if ($ticket['AssignedSpecialist'] !== null) { ?>
                     <div class="content-section padding-small">
-                        <?php if ($ticket['AssignedSpecialist'] !== null) { ?>
                         <p>
                             <strong>Assigned Specialist:</strong>
                             <span><?= $ticket['AssignedSpecialist_FirstName'] . ' ' . $ticket['AssignedSpecialist_Surname'] ?></span>
@@ -135,8 +135,8 @@ if (!isset($ticket))
                             <strong>Contact:</strong>
                             <span><?= $ticket['AssignedSpecialist_TelephoneNumber'] ?></span>
                         </p>
-                        <?php } ?>
                     </div>
+                    <?php } ?>
                 </div>
             </div>
             <div class="main-content padding-small">
