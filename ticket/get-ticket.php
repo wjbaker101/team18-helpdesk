@@ -12,6 +12,7 @@ $sqlTicketID = getSecureText($_GET['id'], $connection, true);
 $sql = "SELECT
 Ticket.*,
 Resolution.*,
+Hardware.*,
 HelpdeskOperator.FirstName AS HelpdeskOperator_FirstName,
 HelpdeskOperator.Surname AS HelpdeskOperator_Surname,
 HelpdeskOperator.TelephoneNumber AS HelpdeskOperator_TelephoneNumber,
