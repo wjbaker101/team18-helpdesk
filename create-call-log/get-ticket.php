@@ -11,22 +11,48 @@ $sqlTicketID = getSecureText($_GET['id'], $connection, true);
 
 $sql = "SELECT
 Ticket.*,
+
 Resolution.*,
+
+Hardware.*,
+
+OperatingSystems.Name AS OS_Name,
+OperatingSystems.DeveloperCompany AS OS_Developer,
+OperatingSystems.LatestVersion AS OS_LatestVersion,
+
+Software.Name AS Software_Name,
+Software.LatestVersion AS Software_LastestVersion,
+Software.Developer AS Software_Developer,
+
 HelpdeskOperator.FirstName AS HelpdeskOperator_FirstName,
 HelpdeskOperator.Surname AS HelpdeskOperator_Surname,
 HelpdeskOperator.TelephoneNumber AS HelpdeskOperator_TelephoneNumber,
+
 AssignedSpecialist.FirstName AS AssignedSpecialist_FirstName,
 AssignedSpecialist.Surname AS AssignedSpecialist_Surname,
 AssignedSpecialist.TelephoneNumber AS AssignedSpecialist_TelephoneNumber,
+
 ResolutionEmployee.FirstName AS ResolutionEmployee_FirstName,
 ResolutionEmployee.Surname AS ResolutionEmployee_Surname,
-ResolutionEmployee.TelephoneNumber AS ResolutionEmployee_TelephoneNumber
+ResolutionEmployee.TelephoneNumber AS ResolutionEmployee_TelephoneNumber,
+
+Caller.FirstName AS Caller_FirstName,
+Caller.Surname AS Caller_Surname,
+Caller.TelephoneNumber AS Caller_TelephoneNumber
+
 FROM Tickets AS Ticket
+
+LEFT JOIN Hardware ON Ticket.HardwareSerialID=Hardware.HardwareSerialID
+LEFT JOIN OperatingSystems ON OperatingSystems.OperatingSystemID=Ticket.OperatingSystemID
+LEFT JOIN Software ON Software.SoftwareID=Ticket.SoftwareID
 LEFT JOIN Resolutions AS Resolution ON Ticket.ResolutionID=Resolution.ResolutionID
 LEFT JOIN Employees AS HelpdeskOperator ON Ticket.HelpdeskOperator=HelpdeskOperator.EmployeeID
 LEFT JOIN Employees AS AssignedSpecialist ON Ticket.AssignedSpecialist=AssignedSpecialist.EmployeeID
 LEFT JOIN Employees AS ResolutionEmployee ON Resolution.EmployeeID=ResolutionEmployee.EmployeeID
+LEFT JOIN Employees AS Caller ON Ticket.CallerID=Caller.EmployeeID
+
 WHERE Ticket.TicketID={$sqlTicketID}
+
 GROUP BY Ticket.TicketID";
 
 $result = $connection->query($sql);
