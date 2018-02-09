@@ -52,7 +52,7 @@ include('log-in.php');
                 <form class="login-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                     <h2>Login</h2>
                     <h4>Employee ID</h4>
-                    <input class="employee-id-input" type="text" name="employee-id" value="<?php echo htmlspecialchars($_POST['employee-id']); ?>">
+                    <input class="employee-id-input" type="text" name="employee-id" value="<?php if (isset($_POST['employee-id'])) echo htmlspecialchars($_POST['employee-id']); ?>">
                     <?= $usernameMessage ?>
                     <h4>Password</h4>
                     <input class="password-input" type="password" name="password">
