@@ -78,63 +78,75 @@ if (!isset($ticket))
             <div class="sidebar float-left padding-small">
                 <div class="bg-white shadow">
                     <div class="content-section padding-small">
-                        <h2>Details of Ticket <?= $ticket['TicketID'] ?></h2>
+                        <h1>Ticket <?= $ticket['TicketID'] ?></h1>
+                        <p><strong><?= $ticket['Summary'] ?></strong></p>
+                    </div>
+                    <div class="content-section padding-small">
                         <p>
                             <span class="cell-middle"><?= (new DateTime($ticket['EntryDate']))->format('d/m/Y H:i') ?></span>
                             <i class="status-<?= $ticketStatus ?>"></i>
                         </p>
                         <p>
-                            <strong>Summary</strong><br>
-                            <span><?= $ticket['Summary'] ?></span>
-                        </p>
-                        <p>
-                            <strong>Priority</strong><br>
+                            <strong>Priority:</strong>
                             <i class="priority-<?= $ticketPriority ?>"></i>
                         </p>
                     </div>
                     <div class="content-section padding-small">
                         <p>
-                            <strong>Problem Type</strong><br>
+                            <strong>Problem Type:</strong>
                             <span><?= $ticket['ProblemType'] ?></span>
                         </p>
+                        <?php if ($ticket['HardwareSerialID'] !== null) { ?>
                         <p>
-                            <strong>Hardware Serial ID</strong><br>
+                            <strong>Hardware Serial ID:</strong>
                             <span><?= $ticket['HardwareSerialID'] ?></span>
                         </p>
+                        <?php } ?>
+                        <?php if ($ticket['OperatingSystemID'] !== null) { ?>
                         <p>
-                            <strong>Operating System ID</strong><br>
-                            <span><?= $ticket['OperatingSystemID'] ?></span>
+                            <strong>Operating System:</strong>
+                            <span><?= $ticket['OS_Name'] ?></span>
                         </p>
+                        <?php } ?>
+                        <?php if ($ticket['Software_Name'] !== null) { ?>
                         <p>
-                            <strong>Software ID</strong><br>
-                            <span><?= $ticket['SoftwareID'] ?></span>
+                            <strong>Software:</strong>
+                            <span><?= $ticket['Software_Name'] ?></span>
                         </p>
+                        <?php } ?>
                     </div>
                     <div class="content-section padding-small">
                         <p>
-                            <strong>Created By</strong><br>
+                            <strong>Opened By:</strong>
                             <span><?= $ticket['HelpdeskOperator_FirstName'] . ' ' . $ticket['HelpdeskOperator_Surname'] ?></span>
                         </p>
                         <p>
-                            <strong>Contact Number</strong><br>
-                            <span><?= $ticket['TelephoneNumber'] ?></span>
+                            <strong>Contact:</strong>
+                            <span><?= $ticket['HelpdeskOperator_TelephoneNumber'] ?></span>
                         </p>
+                    </div>
+                    <div class="content-section padding-small">
                         <?php if ($ticket['AssignedSpecialist'] !== null) { ?>
                         <p>
-                            <strong>Assigned Specialist</strong><br>
+                            <strong>Assigned Specialist:</strong>
                             <span><?= $ticket['AssignedSpecialist_FirstName'] . ' ' . $ticket['AssignedSpecialist_Surname'] ?></span>
+                        </p>
+                        <p>
+                            <strong>Contact:</strong>
+                            <span><?= $ticket['AssignedSpecialist_TelephoneNumber'] ?></span>
                         </p>
                         <?php } ?>
                     </div>
                 </div>
             </div>
             <div class="main-content padding-small">
-                <div class="bg-white shadow">
-                    <?php if ($ticketStatus === 'closed') { ?>
+                <?php if ($ticketStatus === 'closed') { ?>
+                <div class="bg-white shadow section">
                     <div class="content-section padding-small">
                         <h2>Resolution</h2>
-                        <h4>Description</h4>
                         <p><?= $ticket['Message'] ?></p>
+                    </div>
+                    <div class="content-section padding-small">
                         <p>
                             <strong>Resolved By: </strong>
                             <span><?= $ticket['ResolutionEmployee_FirstName'] . ' ' . $ticket['ResolutionEmployee_Surname'] ?></span>
@@ -144,10 +156,30 @@ if (!isset($ticket))
                             <span><?= $ticket['ResolutionEmployee_TelephoneNumber'] ?></span>
                         </p>
                     </div>
-                    <?php } ?>
+                </div>
+                <?php } ?>
+                <div class="bg-white shadow section">
+                    <div class="content-section padding-small">
+                        <h2>Full Ticket Details</h2>
+                        <p><?= $ticket['Description'] ?></p>
+                    </div>
+                    <div class="content-section padding-small">
+                        <p>
+                            <strong>Caller's Name:</strong>
+                            <span><?= $ticket['Caller_FirstName'] . ' ' . $ticket['Caller_Surname'] ?></span>
+                        </p>
+                        <p>
+                            <strong>Contact:</strong>
+                            <span><?= $ticket['Caller_TelephoneNumber'] ?></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-white shadow section">
                     <div class="content-section padding-small">
                         <h2>Call Logs</h2>
                     </div>
+                </div>
+                <div class="bg-white shadow section">
                     <div class="content-section padding-small">
                         <h2>Actions</h2>
                         <button class="delete-ticket-button">Delete Ticket</button>
