@@ -1,10 +1,10 @@
 <?php
 
-if (!isset($_POST['submitted'])) return;
-
 $usernameMessage = '';
 $passwordMessage = '';
 $errorMessage = '';
+
+if (!isset($_POST['submitted'])) return;
 
 if (!isset($_POST['employee-id']) || strlen($_POST['employee-id']) === 0)
 {
