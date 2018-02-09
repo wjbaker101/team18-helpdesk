@@ -140,12 +140,13 @@ if (!isset($ticket))
                 </div>
             </div>
             <div class="main-content padding-small">
-                <div class="bg-white shadow">
-                    <?php if ($ticketStatus === 'closed') { ?>
+                <?php if ($ticketStatus === 'closed') { ?>
+                <div class="bg-white shadow section">
                     <div class="content-section padding-small">
                         <h2>Resolution</h2>
-                        <h4>Description</h4>
                         <p><?= $ticket['Message'] ?></p>
+                    </div>
+                    <div class="content-section padding-small">
                         <p>
                             <strong>Resolved By: </strong>
                             <span><?= $ticket['ResolutionEmployee_FirstName'] . ' ' . $ticket['ResolutionEmployee_Surname'] ?></span>
@@ -155,10 +156,30 @@ if (!isset($ticket))
                             <span><?= $ticket['ResolutionEmployee_TelephoneNumber'] ?></span>
                         </p>
                     </div>
-                    <?php } ?>
+                </div>
+                <?php } ?>
+                <div class="bg-white shadow section">
+                    <div class="content-section padding-small">
+                        <h2>Full Ticket Details</h2>
+                        <p><?= $ticket['Description'] ?></p>
+                    </div>
+                    <div class="content-section padding-small">
+                        <p>
+                            <strong>Caller's Name:</strong>
+                            <span><?= $ticket['Caller_FirstName'] . ' ' . $ticket['Caller_Surname'] ?></span>
+                        </p>
+                        <p>
+                            <strong>Contact:</strong>
+                            <span><?= $ticket['Caller_TelephoneNumber'] ?></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-white shadow section">
                     <div class="content-section padding-small">
                         <h2>Call Logs</h2>
                     </div>
+                </div>
+                <div class="bg-white shadow section">
                     <div class="content-section padding-small">
                         <h2>Actions</h2>
                         <button class="delete-ticket-button">Delete Ticket</button>
