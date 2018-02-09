@@ -241,7 +241,7 @@ include('create.php');
                             <div class="cell-row">
                                 <h2 class="cell l6 cell-middle">Immediately Close Ticket</h2>
                                 <div class="cell l6 cell-middle text-right">
-                                    <input class="close-ticket-enabled" type="checkbox" name="resolution" value="checked" <?php if (isset($_POST['resolution'])) echo isset($_POST['resolution']) ? 'checked' : '' ?>>
+                                    <input class="close-ticket-enabled" type="checkbox" name="resolution" value="checked" <?php echo isset($_POST['resolution']) ? 'checked' : '' ?>>
                                     <span>Enable</span>
                                 </div>
                             </div>
