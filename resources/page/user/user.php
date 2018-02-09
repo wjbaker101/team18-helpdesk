@@ -7,6 +7,8 @@ $employee = null;
 
 if (!$connection) return;
 
+if (!isset($_SESSION['EmployeeID']) || !isset($_SESSION['Password'])) return;
+
 $employeeId = $_SESSION['EmployeeID'];
 $hashedPassword = $_SESSION['Password'];
 
