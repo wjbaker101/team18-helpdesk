@@ -78,17 +78,16 @@ if (!isset($ticket))
             <div class="sidebar float-left padding-small">
                 <div class="bg-white shadow">
                     <div class="content-section padding-small">
-                        <h2>Details of Ticket <?= $ticket['TicketID'] ?></h2>
+                        <h1>Ticket <?= $ticket['TicketID'] ?></h1>
+                        <p><strong><?= $ticket['Summary'] ?></strong></p>
+                    </div>
+                    <div class="content-section padding-small">
                         <p>
                             <span class="cell-middle"><?= (new DateTime($ticket['EntryDate']))->format('d/m/Y H:i') ?></span>
                             <i class="status-<?= $ticketStatus ?>"></i>
                         </p>
                         <p>
-                            <strong>Summary</strong><br>
-                            <span><?= $ticket['Summary'] ?></span>
-                        </p>
-                        <p>
-                            <strong>Priority</strong><br>
+                            <strong>Priority:</strong>
                             <i class="priority-<?= $ticketPriority ?>"></i>
                         </p>
                     </div>
