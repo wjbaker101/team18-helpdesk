@@ -27,7 +27,10 @@ AssignedSpecialist.Surname AS AssignedSpecialist_Surname,
 AssignedSpecialist.TelephoneNumber AS AssignedSpecialist_TelephoneNumber,
 ResolutionEmployee.FirstName AS ResolutionEmployee_FirstName,
 ResolutionEmployee.Surname AS ResolutionEmployee_Surname,
-ResolutionEmployee.TelephoneNumber AS ResolutionEmployee_TelephoneNumber
+ResolutionEmployee.TelephoneNumber AS ResolutionEmployee_TelephoneNumber,
+Caller.FirstName AS Caller_FirstName,
+Caller.Surname AS Caller_Surname,
+Caller.TelephoneNumber AS Caller_TelephoneNumber
 FROM Tickets AS Ticket
 LEFT JOIN Resolutions AS Resolution ON Ticket.ResolutionID=Resolution.ResolutionID
 LEFT JOIN Employees AS HelpdeskOperator ON Ticket.HelpdeskOperator=HelpdeskOperator.EmployeeID
