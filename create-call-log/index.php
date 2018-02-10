@@ -16,6 +16,8 @@ if (!isset($ticket))
     exit;
 }
 
+include('create-log.php');
+
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -125,13 +127,14 @@ if (!isset($ticket))
         <?php include(INCLUDE_HEADER) ?>
         <nav role="navigation" class="padding-small clearfix">
             <div class="float-left">
-                <a href="/view-tickets/">&larr; Return to Tickets Overview</a>
+                <a href="/ticket/?id=<?php echo htmlspecialchars($_GET['id']); ?>">&larr; Return to Ticket <?php echo htmlspecialchars($_GET['id']); ?></a>
             </div>
             <div class="float-right">
             </div>
         </nav>
         <div class="content-width clearfix">
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?id=<?php echo htmlspecialchars($_GET['id']); ?>" method="post">
+                <input style="display:none" type="text" value="<?php if (isset($_GET['id'])) echo $_GET['id'] ?>" name="ticket-id">
                 <div class="sidebar float-left padding-small">
                     <div class="bg-white shadow">
                         <div class="content-section padding-small">
@@ -195,43 +198,42 @@ if (!isset($ticket))
                         </div>
                         <?php } ?>
                         <div class="content-section padding-small">
-                            <p><button type="submit">Submit Call Log</button></p>
+                            <p><button type="submit" name="submitted" value="1">Submit Call Log</button></p>
                         </div>
                     </div>
                 </div>
                 <div class="main-content padding-small">
-                    <div class="bg-white shadow">
+                    <div class="bg-white shadow section">
                         <div class="content-section padding-small">
                             <h2>Create a New Call Log</h2>
                         </div>
+                    </div>
+                    <div class="bg-white shadow section">
                         <div class="content-section padding-small">
-                            <h3><abbr title="Details about the employee calling.">Caller Details</abbr></h3>
-                            <h4>Employee ID</h4>
-                            <input class="caller-id-input" type="text" name="caller-id" value="<?php echo htmlspecialchars($_POST['caller-id']); ?>">
-                            <?= $messages->callerID ?>
-                            <h4>Telephone Number</h4>
-                            <input class="telephone-input" type="text" name="telephone-number" value="<?php echo htmlspecialchars($_POST['telephone-number']); ?>">
-                            <h4>Employee Name</h4>
-                            <input class="employee-name-input" type="text">
+                            <h2><abbr title="Details about the employee calling.">Caller Details</abbr></h2>
+                            <div class="column-container">
+                                <div class="column l6 s12 v-content-section">
+                                    <h4><abbr title="Employee ID of the employee.">Employee ID</abbr></h4>
+                                    <input class="caller-id-input" type="text" name="caller-id" value="<?php if (isset($_POST['caller-id'])) echo htmlspecialchars($_POST['caller-id']); ?>">
+                                    <?= $messages->callerID ?>
+                                    <h4><abbr title="Telephone number of the incoming call.">Telephone Number</abbr></h4>
+                                    <input class="telephone-input" type="text" name="telephone-number" value="<?php if (isset($_POST['telephone-number'])) echo htmlspecialchars($_POST['telephone-number']); ?>">
+                                </div>
+                                <div class="column l6 s12 v-content-section">
+                                    <h4>Search Employee Name</h4>
+                                    <input class="search-employee-input" type="text">
+                                    <div class="employee-list-container">
+                                        
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    <div class="bg-white shadow section">
                         <div class="content-section padding-small">
-                            <h3><abbr title="A more detailed explanation about the problem.">Call Log Description</abbr></h3>
-                            <textarea class="description-input" name="description"><?php echo htmlspecialchars($_POST['description']); ?></textarea>
+                            <h2><abbr title="A more detailed explanation about the problem.">Call Log Description</abbr></h2>
+                            <textarea class="description-input" name="description"><?php if (isset($_POST['description'])) echo htmlspecialchars($_POST['description']); ?></textarea>
                             <?= $messages->description ?>
-                        </div>
-                        <div class="content-section padding-small">
-                            <h3>Problem Information</h3>
-                            <h4><abbr title="The type of problem this ticket is categorised as.">Problem Type</abbr></h4>
-                            <input class="problem-type-input" type="text" name="problem-type" value="<?php echo htmlspecialchars($_POST['problem-type']); ?>">
-                            <?= $messages->problemType ?>
-                            <h4><abbr title="Hardware serial ID related to the problem.">Hardware Serial ID</abbr></h4>
-                            <input class="hardware-serial-id-input" type="text" name="hardware-serial-id" value="<?php echo htmlspecialchars($_POST['hardware-serial-id']); ?>">
-                            <?= $messages->hardwareSerialID ?>
-                            <h4><abbr title="Operating System ID related to the problem.">Device Operating System ID</abbr></h4>
-                            <input class="device-operating-system-id-input" type="text" name="os-id" value="<?php echo htmlspecialchars($_POST['os-id']); ?>">
-                            <?= $messages->operatingSystem ?>
-                            <h4><abbr title="Software ID related to the problem.">Software ID</abbr></h4>
-                            <input class="software-id-input" type="text" name="software-id" value="<?php echo htmlspecialchars($_POST['software-id']); ?>">
                         </div>
                     </div>
                 </div>
