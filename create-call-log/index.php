@@ -70,7 +70,55 @@ if (!isset($ticket))
         
         <?php include(INCLUDE_SCRIPTS) ?>
         
-        <script></script>
+        <script>
+            let isRequesting = false;
+            
+            const requestEmployees = (searchTerm = '') =>
+            {
+                isRequesting = true;
+                
+                const http = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
+
+                http.onreadystatechange = () =>
+                {
+                    if (http.readyState === XMLHttpRequest.DONE)
+                    {
+                        if (http.status === 200)
+                        {
+                            const response = http.responseText;
+
+                            document.querySelector('.employee-list-container').innerHTML = response;
+                            
+                            isRequesting = false;
+                        }
+                    }
+                };
+
+                const parameters = `?name=${searchTerm}`;
+
+                http.open('GET', '/resources/tickets/find-employees.php' + parameters, true);
+
+                http.send();
+            };
+            
+            const initEmployeeSearch = () =>
+            {
+                const input = document.querySelector('.search-employee-input');
+                
+                input.addEventListener('input', () =>
+                {
+                    document.querySelector('.employee-list-container').innerHTML = '';
+                    
+                    if (input.value.length === 0) return;
+                    
+                    if (isRequesting) return;
+                    
+                    requestEmployees(input.value.toLowerCase().trim());
+                });
+            };
+            
+            window.addEventListener('load', initEmployeeSearch);
+        </script>
     </head>
     
     <body>
