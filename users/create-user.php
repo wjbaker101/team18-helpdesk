@@ -1,6 +1,7 @@
 <?php
 
 $usernameMessage = '';
+$idMessage = '';
 $password1Message = '';
 $password2Message = '';
 $errorMessage = '';
