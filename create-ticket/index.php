@@ -155,6 +155,7 @@ include('create.php');
                                     <?= $messages->callerID ?>
                                     <h4>Telephone Number</h4>
                                     <input class="telephone-input" type="text" name="telephone-number" value="<?php if (isset($_POST['telephone-number'])) echo htmlspecialchars($_POST['telephone-number']); ?>">
+                                    <?= $messages->telephoneNumber ?>
                                 </div>
                                 <div class="column l6 s12 v-content-section">
                                     <h4>Search Employee Name</h4>
