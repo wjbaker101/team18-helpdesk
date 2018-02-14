@@ -2,20 +2,27 @@
 
 require ($_SERVER['DOCUMENT_ROOT'] . "/resources/page/page.php");
 
+// Checks whether the logged in employee actually exists
+// Redirects to login page
+// Prevents Further code from being ran
 if ($employee === null)
 {
     header ('Location: /users/login.php');
     exit;
 }
 
-$pageNumber = 1;
+$pageNumber = 1; // Default page number
 
+// Get page number
 if (isset($_GET['page'])) $pageNumber = intval($_GET['page']);
 
+// Gets previous page number
+// Sets minimum to 1
 $prevPageNumber = $pageNumber - 1;
 
 if ($prevPageNumber < 1) $prevPageNumber = 1;
 
+// Gets next page number
 $nextPageNumber = $pageNumber + 1;
 
 ?>
