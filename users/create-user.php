@@ -72,11 +72,12 @@ if ($employee['Password'] !== null)
     return;
 }
 
-$fields = 'EmployeeID, Password';
+$fields = 'EmployeeID, Username, Password';
 
+$sqlUsername = getSecureText($_POST['username'], $connection, true);
 $sqlPassword = password_hash($_POST['password1'], PASSWORD_DEFAULT);
 
-$values = "{$employeeId}, '{$sqlPassword}'";
+$values = "{$employeeId}, {$username}, '{$sqlPassword}'";
 
 $sql = "INSERT INTO EmployeeLogins ({$fields}) VALUES ({$values})";
 
