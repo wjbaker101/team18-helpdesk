@@ -77,7 +77,7 @@ $nextPageNumber = $pageNumber + 1;
                     }
                 };
 
-                var parameters = '?sort=' + options.sort + '&order=' + options.descendingOrder + '&pending=' + options.showPending + '&open=' + options.showOpen + '&closed=' + options.showClosed;
+                var parameters = '?sort=' + options.sort + '&order=' + options.descendingOrder + '&pending=' + options.showPending + '&open=' + options.showOpen + '&closed=' + options.showClosed + '&page=<?php echo $pageNumber; ?>';
 
                 http.open('GET', 'get-tickets.php' + parameters, true);
 
