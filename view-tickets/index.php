@@ -131,7 +131,7 @@ $nextPageNumber = $pageNumber + 1;
                             <input class="tickets-input" type="checkbox" name="show-open" checked>
                             <span class="filter-open">Show Open Tickets</span>
                         </p><p>
-                            <input class="tickets-input" type="checkbox" name="show-closed" checked>
+                            <input class="tickets-input" type="checkbox" name="show-closed">
                             <span class="filter-closed">Show Closed Tickets</span>
                         </p>
                     </div>
