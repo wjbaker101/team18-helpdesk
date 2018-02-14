@@ -1,6 +1,7 @@
 <?php
 
 $usernameMessage = '';
+$idMessage = '';
 $password1Message = '';
 $password2Message = '';
 $errorMessage = '';
@@ -9,7 +10,13 @@ if (!isset($_POST['submitted'])) return;
 
 if (!isset($_POST['employee-id']) || strlen($_POST['employee-id']) === 0)
 {
-    $usernameMessage = '<p>Employee ID cannot be blank.</p>';
+    $idMessage = '<p>Employee ID cannot be blank.</p>';
+    return;
+}
+
+if (!isset($_POST['username']) || strlen($_POST['username']) === 0)
+{
+    $usernameMessage = '<p>Username cannot be blank.</p>';
     return;
 }
 
@@ -66,11 +73,12 @@ if ($employee['Password'] !== null)
     return;
 }
 
-$fields = 'EmployeeID, Password';
+$fields = 'EmployeeID, Username, Password';
 
+$sqlUsername = getSecureText($_POST['username'], $connection, true);
 $sqlPassword = password_hash($_POST['password1'], PASSWORD_DEFAULT);
 
-$values = "{$employeeId}, '{$sqlPassword}'";
+$values = "{$employeeId}, '{$sqlUsername}', '{$sqlPassword}'";
 
 $sql = "INSERT INTO EmployeeLogins ({$fields}) VALUES ({$values})";
 
@@ -78,7 +86,7 @@ $result = $connection->query($sql);
 
 if (!$result)
 {
-    $errorMessage = '<p>Unable to create new login.<br>Please try again later.</p>' . $sql;
+    $errorMessage = '<p>Unable to create new login.<br>Please try again later.</p>' . $sqlUsername;
     return;
 }
 else
