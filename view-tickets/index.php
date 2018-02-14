@@ -8,6 +8,16 @@ if ($employee === null)
     exit;
 }
 
+$pageNumber = 1;
+
+if (isset($_GET['page'])) $pageNumber = intval($_GET['page']);
+
+$prevPageNumber = $pageNumber - 1;
+
+if ($prevPageNumber < 1) $prevPageNumber = 1;
+
+$nextPageNumber = $pageNumber + 1;
+
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -51,7 +61,8 @@ if ($employee === null)
                     descendingOrder: document.querySelector('[name=order]').checked,
                     showPending: document.querySelector('[name=show-pending]').checked,
                     showOpen: document.querySelector('[name=show-open]').checked,
-                    showClosed: document.querySelector('[name=show-closed]').checked
+                    showClosed: document.querySelector('[name=show-closed]').checked,
+                    page: <?php echo $pageNumber; ?>,
                 };
 
                 var http = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
@@ -76,7 +87,7 @@ if ($employee === null)
             window.addEventListener('load', getTickets);
 
             window.addEventListener('load', function () {
-                var ticketInputs = Array.from(document.querySelectorAll('.tickets-input'));
+                var ticketInputs = [...document.querySelectorAll('.tickets-input')];
 
                 ticketInputs.forEach(function (input) {
                     input.addEventListener('change', getTickets);
@@ -148,6 +159,12 @@ if ($employee === null)
                         </thead>
                         <tbody class="tickets-container"></tbody>
                     </table>
+                    <h3>Page</h3>
+                    <?php if ($pageNumber > 1) { ?>
+                    <a href="/view-tickets/?page=<?php echo $prevPageNumber; ?>"><button class="page-left">&larr;</button></a>
+                    <?php } ?>
+                    <span>Page <?php echo $pageNumber; ?></span>
+                    <a href="/view-tickets/?page=<?php echo $nextPageNumber; ?>"><button class="page-right">&rarr;</button></a>
                 </div>
             </div>
         </div>
