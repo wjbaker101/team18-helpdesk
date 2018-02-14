@@ -178,7 +178,7 @@ include('create.php');
                             <h2>Problem Information</h2>
                             <h4><abbr title="The type of problem this ticket is categorised as.">Problem Type</abbr></h4>
                             <!--<input class="problem-type-input" type="text" name="problem-type" value="<?php if (isset($_POST['problem-type'])) echo htmlspecialchars($_POST['problem-type']); ?>">-->
-                            <select>
+                            <select name="problem-type">
                                 <option>Network</option>
                                 <option>Hardware</option>
                                 <option>Software</option>
