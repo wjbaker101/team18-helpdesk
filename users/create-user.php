@@ -9,7 +9,13 @@ if (!isset($_POST['submitted'])) return;
 
 if (!isset($_POST['employee-id']) || strlen($_POST['employee-id']) === 0)
 {
-    $usernameMessage = '<p>Employee ID cannot be blank.</p>';
+    $idMessage = '<p>Employee ID cannot be blank.</p>';
+    return;
+}
+
+if (!isset($_POST['username']) || strlen($_POST['username']) === 0)
+{
+    $usernameMessage = '<p>Username cannot be blank.</p>';
     return;
 }
 
