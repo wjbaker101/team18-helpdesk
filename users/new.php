@@ -37,10 +37,13 @@ include('create-user.php');
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                     <h2>Create a New Employee Login</h2>
                     <h4>Your Employee ID</h4>
-                    <input type="text" name="employee-id" value="<?php echo htmlspecialchars($_POST['employee-id']); ?>" autofocus>
+                    <input type="text" name="employee-id" value="<?php if (isset($_POST['employee-id'])) echo htmlspecialchars($_POST['employee-id']); ?>" autofocus>
+                    <?= $idMessage ?>
+                    <h4>Username</h4>
+                    <input type="text" name="username" value="<?php if (isset($_POST['username'])) echo htmlspecialchars($_POST['username']); ?>" autofocus>
                     <?= $usernameMessage ?>
                     <h4>Password</h4>
-                    <input type="password" name="password1" value="<?php echo htmlspecialchars($_POST['password1']); ?>">
+                    <input type="password" name="password1">
                     <?= $password1Message ?>
                     <h4>Confirm Password</h4>
                     <input type="password" name="password2">
