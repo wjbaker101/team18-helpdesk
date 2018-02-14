@@ -40,7 +40,7 @@ include('create-user.php');
                     <input type="text" name="employee-id" value="<?php if (isset($_POST['employee-id'])) echo htmlspecialchars($_POST['employee-id']); ?>" autofocus>
                     <?= $idMessage ?>
                     <h4>Username</h4>
-                    <input type="text" name="username" value="<?php if (isset($_POST['username'])) echo htmlspecialchars($_POST['username']); ?>" autofocus>
+                    <input type="text" name="username" value="<?php if (isset($_POST['username'])) echo htmlspecialchars($_POST['username']); ?>">
                     <?= $usernameMessage ?>
                     <h4>Password</h4>
                     <input type="password" name="password1">
