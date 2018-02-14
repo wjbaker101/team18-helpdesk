@@ -38,7 +38,7 @@ if (isset($_GET['page']))
     if ($page <= 0) $page = 1;
 }
 
-$limit = 19;
+$limit = 20;
 
 $offset = ($page - 1) * $limit;
 
