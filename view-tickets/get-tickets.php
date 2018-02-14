@@ -29,7 +29,20 @@ $order = 'ASC';
 
 if (isset($_GET['order']) && $_GET['order'] === 'true') $order = 'DESC';
 
-$sql = "SELECT * FROM Tickets ORDER BY {$sort} {$order}";
+$page = 1;
+
+if (isset($_GET['page']))
+{
+    $page = intval($_GET['page']);
+    
+    if ($page <= 0) $page = 1;
+}
+
+$limit = 19;
+
+$offset = ($page - 1) * $limit;
+
+$sql = "SELECT * FROM Tickets ORDER BY {$sort} {$order} LIMIT {$limit} OFFSET {$offset}";
 
 $result = $connection->query($sql);
 
