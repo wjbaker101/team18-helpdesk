@@ -74,6 +74,7 @@ include('create.php');
                 margin: 15px 0;
                 position: relative;
                 border: 1px solid #ccc;
+                overflow-y: scroll;
             }
         </style>
         
@@ -95,6 +96,54 @@ include('create.php');
                 addCollapsableSection('.specialist-info-enabled', '.specialist-info-details');
                 addCollapsableSection('.close-ticket-enabled', '.close-ticket-details');
             });
+            
+            let isRequesting = false;
+            
+            const requestEmployees = (searchTerm = '') =>
+            {
+                isRequesting = true;
+                
+                const http = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
+
+                http.onreadystatechange = () =>
+                {
+                    if (http.readyState === XMLHttpRequest.DONE)
+                    {
+                        if (http.status === 200)
+                        {
+                            const response = http.responseText;
+
+                            document.querySelector('.employee-list-container.caller-employees').innerHTML = response;
+                            
+                            isRequesting = false;
+                        }
+                    }
+                };
+
+                const parameters = `?name=${searchTerm}`;
+
+                http.open('GET', '/resources/tickets/find-employees.php' + parameters, true);
+
+                http.send();
+            };
+            
+            const initEmployeeSearch = () =>
+            {
+                const input = document.querySelector('.caller-name-input');
+                
+                input.addEventListener('input', () =>
+                {
+                    document.querySelector('.employee-list-container.caller-employees').innerHTML = '';
+                    
+                    if (input.value.length === 0) return;
+                    
+                    if (isRequesting) return;
+                    
+                    requestEmployees(input.value.toLowerCase().trim());
+                });
+            };
+            
+            window.addEventListener('load', initEmployeeSearch);
         </script>
     </head>
     
@@ -159,10 +208,8 @@ include('create.php');
                                 </div>
                                 <div class="column l6 s12 v-content-section">
                                     <h4>Search Employee Name</h4>
-                                    <input class="employee-name-input" type="text">
-                                    <div class="employee-list-container">
-                                        
-                                    </div>
+                                    <input class="caller-name-input" type="text">
+                                    <div class="employee-list-container caller-employees"></div>
                                 </div>
                             </div>
                         </div>
