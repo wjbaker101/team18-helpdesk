@@ -90,6 +90,7 @@ if (!isset($ticket))
                             <strong>Priority:</strong>
                             <i class="priority-<?= $ticketPriority ?>"></i>
                         </p>
+                        <p><a href="/assign-specialist/?id=<?= $ticket['TicketID'] ?>"><button>Assign Specialist</button></a></p>
                     </div>
                     <div class="content-section padding-small">
                         <p>
