@@ -99,7 +99,7 @@ include('create.php');
             
             let isRequesting = false;
             
-            const requestEmployees = (searchTerm = '') =>
+            const requestEmployees = (displayElement, searchTerm = '', onlySpecialist = true) =>
             {
                 isRequesting = true;
                 
@@ -113,37 +113,52 @@ include('create.php');
                         {
                             const response = http.responseText;
 
-                            document.querySelector('.employee-list-container.caller-employees').innerHTML = response;
+                            document.querySelector(displayElement).innerHTML = response;
                             
                             isRequesting = false;
                         }
                     }
                 };
 
-                const parameters = `?name=${searchTerm}`;
+                const specialist = onlySpecialist ? '&specialist=true' : '';
+                
+                const parameters = `?name=${searchTerm}${specialist}`;
 
                 http.open('GET', '/resources/tickets/find-employees.php' + parameters, true);
 
                 http.send();
             };
             
-            const initEmployeeSearch = () =>
+            const initEmployeeSearches = () =>
             {
-                const input = document.querySelector('.caller-name-input');
+                const callerSearchInput = document.querySelector('.caller-name-input');
                 
-                input.addEventListener('input', () =>
+                callerSearchInput.addEventListener('input', () =>
                 {
                     document.querySelector('.employee-list-container.caller-employees').innerHTML = '';
                     
-                    if (input.value.length === 0) return;
+                    if (callerSearchInput.value.length === 0) return;
                     
                     if (isRequesting) return;
                     
-                    requestEmployees(input.value.toLowerCase().trim());
+                    requestEmployees('.employee-list-container.caller-employees', callerSearchInput.value.toLowerCase().trim(), false);
+                });
+                
+                const specialistSearchInput = document.querySelector('.specialist-name-input');
+                
+                specialistSearchInput.addEventListener('input', () =>
+                {
+                    document.querySelector('.employee-list-container.specialist-employees').innerHTML = '';
+                    
+                    if (specialistSearchInput.value.length === 0) return;
+                    
+                    if (isRequesting) return;
+                    
+                    requestEmployees('.employee-list-container.specialist-employees', specialistSearchInput.value.toLowerCase().trim(), true);
                 });
             };
             
-            window.addEventListener('load', initEmployeeSearch);
+            window.addEventListener('load', initEmployeeSearches);
         </script>
     </head>
     
@@ -271,15 +286,17 @@ include('create.php');
                                 </div>
                             </div>
                             <div class="specialist-info-details section-details <?php echo isset($_POST['assign-specialist']) ? '' : 'visible' ?>">
-                                <h4><abbr title="The Employee ID of the specialist.">Specialist ID</abbr></h4>
-                                <input class="specialist-id-input" type="text" name="specialist-id" value="<?php if (isset($_POST['specialist-id'])) echo htmlspecialchars($_POST['specialist-id']); ?>">
-                                <?= $messages->specialist ?>
-                                <h4><abbr title="First and surname of the specialist for searching.">Specialist Name</abbr></h4>
-                                <p>Search for the specialist's ID:</p>
-                                <div class="employees-select-container">
-                                    <input class="employee-name-input" type="text"><br>
-                                    <select class="employees-select" multiple>
-                                    </select>
+                                <div class="column-container">
+                                    <div class="column l6 s12 v-content-section">
+                                        <h4>Specialist ID</h4>
+                                        <input class="specialist-id-input" type="text" name="specialist-id" value="<?php if (isset($_POST['specialist-id'])) echo htmlspecialchars($_POST['specialist-id']); ?>">
+                                        <?= $messages->specialist ?>
+                                    </div>
+                                    <div class="column l6 s12 v-content-section">
+                                        <h4>Search Specialist Name</h4>
+                                        <input class="specialist-name-input" type="text">
+                                        <div class="employee-list-container specialist-employees"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
