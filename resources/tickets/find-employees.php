@@ -11,7 +11,7 @@ $specialistQuery = getSpecialistQuery();
 
 $searchTerm = getSecureText($_GET['name'], $connection, true);
 
-$sql = "SELECT * FROM Helpdesk.Employees WHERE {$specialistQuery} CONCAT(FirstName, ' ', Surname) LIKE '{$searchTerm}%'";
+$sql = "SELECT * FROM Helpdesk.Employees WHERE {$specialistQuery} CONCAT(FirstName, ' ', Surname) LIKE '{$searchTerm}%' LIMIT 3";
 
 $result = $connection->query($sql);
 
