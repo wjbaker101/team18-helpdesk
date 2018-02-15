@@ -1,51 +1,27 @@
 <?php
 
+// Prepare database connection
+// And check whether it was successful
 require_once($_SERVER['DOCUMENT_ROOT'] . '/resources/page/utils/database.php');
 
 if (!$connection) return;
 
-$sort = 'TicketID';
+// Gets the possible different values to place inside the SQL query
 
-if (isset($_GET['sort']))
-{
-    switch ($_GET['sort'])
-    {
-        case '0':
-            $sort = 'EntryDate';
-            break;
-        case '1':
-            $sort = 'TicketID';
-            break;
-        case '2':
-            $sort = 'Priority';
-            break;
-        default:
-            $sort = 'TicketID';
-            break;
-    }
-}
+$sort = getQuerySort();
 
-$order = 'ASC';
+$order = getQueryOrder();
 
-if (isset($_GET['order']) && $_GET['order'] === 'true') $order = 'DESC';
-
-$page = 1;
-
-if (isset($_GET['page']))
-{
-    $page = intval($_GET['page']);
-    
-    if ($page <= 0) $page = 1;
-}
-
-$limit = 20;
-
-$offset = ($page - 1) * $limit;
+$limitAndOffset = getQueryLimitAndOffset(getPageNumber());
+$limit = $limitAndOffset['limit'];
+$offset = $limitAndOffset['offset'];
 
 $sql = "SELECT * FROM Tickets ORDER BY {$sort} {$order} LIMIT {$limit} OFFSET {$offset}";
 
-$result = $connection->query($sql);
+$result = $connection->query($sql); // Execute the query
 
+// Stop if unable to query the database,
+// or if no results were found
 if (!$result || $result->num_rows === 0) return;
 
 while ($ticket = $result->fetch_assoc())
@@ -138,5 +114,70 @@ while ($ticket = $result->fetch_assoc())
 }
 
 $connection->close();
+
+/**
+ * Gets the column name to sort by in the SQL query.
+ */
+function getQuerySort()
+{
+    if (isset($_GET['sort']))
+    {
+        switch ($_GET['sort'])
+        {
+            case '0': return 'EntryDate';
+            case '1': return 'TicketID';
+            case '2': return 'Priority';
+            default:  return 'TicketID';
+        }
+    }
+}
+
+/**
+ * Gets the order in which to sort the data in the SQL query.
+ */
+function getQueryOrder()
+{
+    // order=true : Descending
+    // order=false (Or anything other than true) : Ascending
+    
+    if (isset($_GET['order']) && $_GET['order'] === 'true') return 'DESC';
+    
+    return 'ASC';
+}
+
+/**
+ * Gets the maximum number of tickets to display at one time,
+ * and where to start displaying them from the within the list.
+ */
+function getQueryLimitAndOffset($page)
+{
+    // Gets the offset using the current page number and max tickets on each page
+    $offset = ($page - 1) * $limit;
+    
+    $limitAndOffset =
+    [
+        'limit': 20,
+        'offset': $offset,
+    ];
+    
+    return $limitAndOffset;
+}
+
+/**
+ * Gets the current page number, determining which tickets to display.
+ */
+function getPageNumber()
+{
+    if (isset($_GET['page']))
+    {
+        $page = intval($_GET['page']); // Converts to an integer
+
+        if ($page <= 0) $page = 1;
+        
+        return $page;
+    }
+    
+    return 1; // Default page number, if no page is specified
+}
 
 ?>
