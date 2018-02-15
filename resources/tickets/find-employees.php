@@ -7,9 +7,11 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/resources/page/utils/cleanup-utils.ph
 
 if (!$connection) return;
 
+$specialistQuery = getSpecialistQuery();
+
 $searchTerm = getSecureText($_GET['name'], $connection, true);
 
-$sql = "SELECT * FROM Helpdesk.Employees WHERE CONCAT(FirstName, ' ', Surname) LIKE '{$searchTerm}%'";
+$sql = "SELECT * FROM Helpdesk.Employees WHERE {$specialistQuery} CONCAT(FirstName, ' ', Surname) LIKE '{$searchTerm}%'";
 
 $result = $connection->query($sql);
 
@@ -26,6 +28,19 @@ while ($employee = $result->fetch_assoc())
             </p>
         </div>
     ";
+}
+
+/**
+ * Gets the additional SQL query for when only searching for specialists.
+ */
+function getSpecialistQuery()
+{
+    if (isset($_GET['specialist']))
+    {
+        return "JobTitle='IT Specialist' AND";
+    }
+    
+    return '';
 }
 
 ?>
