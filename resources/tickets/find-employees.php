@@ -20,7 +20,7 @@ if (!$result || $result->num_rows === 0) return;
 while ($employee = $result->fetch_assoc())
 {
     echo "
-        <div class=\"content-section padding-small\">
+        <div class=\"content-section hpadding-small\">
             <h3>({$employee['EmployeeID']}) {$employee['FirstName']} {$employee['Surname']}</h3>
             <p>
                 <strong>Department:</strong> {$employee['Department']}<br>
