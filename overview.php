@@ -2,8 +2,6 @@
 
 require ($_SERVER['DOCUMENT_ROOT'] . "/resources/page/page.php");
 
-include('log-in.php');
-
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -17,7 +15,7 @@ include('log-in.php');
         <?php include(INCLUDE_STYLE) ?>
         
         <style>
-            .button
+            .overview-button
             {
                 font-size: 28px;
                 padding: 20px;
@@ -27,56 +25,17 @@ include('log-in.php');
         
         <?php include(INCLUDE_SCRIPTS) ?>
         
-        <script>
-            window.addEventListener('load', () =>
-            {
-                const loginForm = document.querySelector('.login-form');
-                
-                const elements =
-                [
-                    document.querySelector('.employee-id-input'),
-                    document.querySelector('.password-input'),
-                ];
-                
-                elements.forEach((element) =>
-                {
-                    element.addEventListener('keypress', (event) =>
-                    {
-                        if (event.keyCode === 13)
-                        {
-                            loginForm.submit();
-                        }
-                    });
-                });
-            });
-        </script>
+        <script></script>
     </head>
     
     <body>
         <?php include(INCLUDE_HEADER) ?>
         <div class="content-width clearfix padding-small">
             <div class="padding-small shadow bg-white text-centered">
-                <form class="login-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                    <h2>Welcome</h2>
-                    
-					<h4>Select the page you would like to view.</h4>
-                    
-					
-					<FORM METHOD="LINK" ACTION="view-tickets/index.php">
-					<p><button class="button" INPUT TYPE="submit">View Tickets</button></p>
-					</FORM>
-					                 
-									 
-									 
-									 <!--   <h4>sample text</h4> -->
-									 
-					<FORM METHOD="LINK" ACTION="analytics/index.php">				 
-					<p><button class="button" INPUT TYPE="submit">View Analytics</button></p>
-					</FORM>
-					
-                                       <!-- <p><button name="submitted" type="submit" value="1">Login</button></p>*/ -->
-                    <?= $errorMessage ?>
-                </form>
+                <h2>Welcome</h2>
+                <h4>Select the page you would like to view.</h4>
+                <p><a href="/view-tickets/"><button class="overview-button">View Tickets</button></a></p>
+                <p><a href="/analytics/"><button class="overview-button">View Analytics</button></a></p>
             </div>
         </div>
         <?php include(INCLUDE_FOOTER) ?>
