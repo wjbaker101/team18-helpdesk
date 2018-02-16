@@ -90,6 +90,13 @@ include('assign.php');
     
     <body>
         <?php include(INCLUDE_HEADER) ?>
+        <nav role="navigation" class="padding-small clearfix">
+            <div class="float-left">
+                <a href="/ticket/?id=<?php echo htmlspecialchars($_GET['id']); ?>">&larr; Return to Ticket <?php echo htmlspecialchars($_GET['id']); ?></a>
+            </div>
+            <div class="float-right">
+            </div>
+        </nav>
         <div class="content-width clearfix padding-small">
             <div class="padding-small shadow bg-white">
                 <form class="login-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?id=<?= $ticket['TicketID'] ?>" method="post">
