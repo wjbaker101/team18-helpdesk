@@ -400,10 +400,33 @@ body > nav[role=navigation]
     color: #fff;
 }
 
+button,
+.button
+{
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #202020;
+    border: none;
+    color: #fff;
+    text-align: center;
+    font: inherit;
+    padding: 0.5em;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+button:hover,
+.button:hover
+{
+    color: #ccc;
+}
+
 input[type=text],
 input[type=password],
 input[type=number],
-textarea
+textarea,
+select
 {
     font-family: 'Open Sans', sans-serif;
     font-size: 15px;
@@ -416,7 +439,8 @@ textarea
 input[type=text]:focus,
 input[type=password]:focus,
 input[type=number]:focus,
-textarea
+textarea:focus,
+select:focus
 {
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.10), 0 2px 2px rgba(0, 0, 0, 0.15);  
 }
