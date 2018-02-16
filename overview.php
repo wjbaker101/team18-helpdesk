@@ -15,7 +15,7 @@ require ($_SERVER['DOCUMENT_ROOT'] . "/resources/page/page.php");
         <?php include(INCLUDE_STYLE) ?>
         
         <style>
-            .button
+            .overview-button
             {
                 font-size: 28px;
                 padding: 20px;
@@ -35,8 +35,8 @@ require ($_SERVER['DOCUMENT_ROOT'] . "/resources/page/page.php");
                 <form class="login-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                     <h2>Welcome</h2>
 					<h4>Select the page you would like to view.</h4>
-                    <p><a href="/view-tickets/"><button>View Tickets</button></a></p>
-                    <p><a href="/analytics/"><button>View Analytics</button></a></p>
+                    <p><a href="/view-tickets/"><button class="overview-button">View Tickets</button></a></p>
+                    <p><a href="/analytics/"><button class="overview-button">View Analytics</button></a></p>
                 </form>
             </div>
         </div>
