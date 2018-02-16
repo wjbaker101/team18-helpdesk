@@ -87,6 +87,13 @@ if ($employee === null)
     
     <body>
         <?php include(INCLUDE_HEADER) ?>
+        <nav role="navigation" class="padding-small clearfix">
+            <div class="float-left">
+                <a href="/overview.php">&larr; Return to Overview page</a>
+            </div>
+            <div class="float-right">
+            </div>
+        </nav>
         <div class="content-width clearfix">
             <div class="sidebar float-left padding-small">
                 <div class="section bg-white shadow">
