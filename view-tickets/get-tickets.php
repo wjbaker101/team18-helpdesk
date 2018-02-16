@@ -156,7 +156,7 @@ function getQueryLimitAndOffset($page)
     
     $limitAndOffset =
     [
-        'limit': 20,
+        'limit': 15,
         'offset': $offset,
     ];
     
