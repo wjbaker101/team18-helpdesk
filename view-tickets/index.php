@@ -2,11 +2,28 @@
 
 require ($_SERVER['DOCUMENT_ROOT'] . "/resources/page/page.php");
 
+// Checks whether the logged in employee actually exists
+// Redirects to login page
+// Prevents Further code from being ran
 if ($employee === null)
 {
     header ('Location: /users/login.php');
     exit;
 }
+
+$pageNumber = 1; // Default page number
+
+// Get page number
+if (isset($_GET['page'])) $pageNumber = intval($_GET['page']);
+
+// Gets previous page number
+// Sets minimum to 1
+$prevPageNumber = $pageNumber - 1;
+
+if ($prevPageNumber < 1) $prevPageNumber = 1;
+
+// Gets next page number
+$nextPageNumber = $pageNumber + 1;
 
 ?>
 <!DOCTYPE html>
@@ -51,7 +68,8 @@ if ($employee === null)
                     descendingOrder: document.querySelector('[name=order]').checked,
                     showPending: document.querySelector('[name=show-pending]').checked,
                     showOpen: document.querySelector('[name=show-open]').checked,
-                    showClosed: document.querySelector('[name=show-closed]').checked
+                    showClosed: document.querySelector('[name=show-closed]').checked,
+                    page: <?php echo $pageNumber; ?>,
                 };
 
                 var http = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
@@ -66,7 +84,7 @@ if ($employee === null)
                     }
                 };
 
-                var parameters = '?sort=' + options.sort + '&order=' + options.descendingOrder + '&pending=' + options.showPending + '&open=' + options.showOpen + '&closed=' + options.showClosed;
+                var parameters = '?sort=' + options.sort + '&order=' + options.descendingOrder + '&pending=' + options.showPending + '&open=' + options.showOpen + '&closed=' + options.showClosed + '&page=<?php echo $pageNumber; ?>';
 
                 http.open('GET', 'get-tickets.php' + parameters, true);
 
@@ -76,7 +94,7 @@ if ($employee === null)
             window.addEventListener('load', getTickets);
 
             window.addEventListener('load', function () {
-                var ticketInputs = Array.from(document.querySelectorAll('.tickets-input'));
+                var ticketInputs = [...document.querySelectorAll('.tickets-input')];
 
                 ticketInputs.forEach(function (input) {
                     input.addEventListener('change', getTickets);
@@ -127,7 +145,7 @@ if ($employee === null)
                             <input class="tickets-input" type="checkbox" name="show-open" checked>
                             <span class="filter-open">Show Open Tickets</span>
                         </p><p>
-                            <input class="tickets-input" type="checkbox" name="show-closed" checked>
+                            <input class="tickets-input" type="checkbox" name="show-closed">
                             <span class="filter-closed">Show Closed Tickets</span>
                         </p>
                     </div>
@@ -155,6 +173,12 @@ if ($employee === null)
                         </thead>
                         <tbody class="tickets-container"></tbody>
                     </table>
+                    <h3>Page</h3>
+                    <?php if ($pageNumber > 1) { ?>
+                    <a href="/view-tickets/?page=<?php echo $prevPageNumber; ?>"><button class="page-left">&larr;</button></a>
+                    <?php } ?>
+                    <span>Page <?php echo $pageNumber; ?></span>
+                    <a href="/view-tickets/?page=<?php echo $nextPageNumber; ?>"><button class="page-right">&rarr;</button></a>
                 </div>
             </div>
         </div>
