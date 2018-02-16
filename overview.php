@@ -34,23 +34,9 @@ require ($_SERVER['DOCUMENT_ROOT'] . "/resources/page/page.php");
             <div class="padding-small shadow bg-white text-centered">
                 <form class="login-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                     <h2>Welcome</h2>
-                    
 					<h4>Select the page you would like to view.</h4>
-                    
-					
-					<FORM METHOD="LINK" ACTION="view-tickets/index.php">
-					<p><button class="button" INPUT TYPE="submit">View Tickets</button></p>
-					</FORM>
-					                 
-									 
-									 
-									 <!--   <h4>sample text</h4> -->
-									 
-					<FORM METHOD="LINK" ACTION="analytics/index.php">				 
-					<p><button class="button" INPUT TYPE="submit">View Analytics</button></p>
-					</FORM>
-					
-                                       <!-- <p><button name="submitted" type="submit" value="1">Login</button></p>*/ -->
+                    <p><a href="/view-tickets/"><button>View Tickets</button></a></p>
+                    <p><a href="/analytics/"><button>View Analytics</button></a></p>
                 </form>
             </div>
         </div>
