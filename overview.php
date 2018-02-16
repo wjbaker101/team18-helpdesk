@@ -32,12 +32,10 @@ require ($_SERVER['DOCUMENT_ROOT'] . "/resources/page/page.php");
         <?php include(INCLUDE_HEADER) ?>
         <div class="content-width clearfix padding-small">
             <div class="padding-small shadow bg-white text-centered">
-                <form class="login-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                    <h2>Welcome</h2>
-					<h4>Select the page you would like to view.</h4>
-                    <p><a href="/view-tickets/"><button class="overview-button">View Tickets</button></a></p>
-                    <p><a href="/analytics/"><button class="overview-button">View Analytics</button></a></p>
-                </form>
+                <h2>Welcome</h2>
+                <h4>Select the page you would like to view.</h4>
+                <p><a href="/view-tickets/"><button class="overview-button">View Tickets</button></a></p>
+                <p><a href="/analytics/"><button class="overview-button">View Analytics</button></a></p>
             </div>
         </div>
         <?php include(INCLUDE_FOOTER) ?>
