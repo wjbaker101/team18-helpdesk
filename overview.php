@@ -2,8 +2,6 @@
 
 require ($_SERVER['DOCUMENT_ROOT'] . "/resources/page/page.php");
 
-include('log-in.php');
-
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -53,7 +51,6 @@ include('log-in.php');
 					</FORM>
 					
                                        <!-- <p><button name="submitted" type="submit" value="1">Login</button></p>*/ -->
-                    <?= $errorMessage ?>
                 </form>
             </div>
         </div>
