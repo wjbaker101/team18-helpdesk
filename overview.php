@@ -27,29 +27,7 @@ include('log-in.php');
         
         <?php include(INCLUDE_SCRIPTS) ?>
         
-        <script>
-            window.addEventListener('load', () =>
-            {
-                const loginForm = document.querySelector('.login-form');
-                
-                const elements =
-                [
-                    document.querySelector('.employee-id-input'),
-                    document.querySelector('.password-input'),
-                ];
-                
-                elements.forEach((element) =>
-                {
-                    element.addEventListener('keypress', (event) =>
-                    {
-                        if (event.keyCode === 13)
-                        {
-                            loginForm.submit();
-                        }
-                    });
-                });
-            });
-        </script>
+        <script></script>
     </head>
     
     <body>
