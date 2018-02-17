@@ -3,6 +3,7 @@
 // Prepare database connection
 // And check whether it was successful
 require_once($_SERVER['DOCUMENT_ROOT'] . '/resources/page/utils/database.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/resources/page/utils/cleanup-utils.php');
 
 if (!$connection) return;
 
@@ -24,7 +25,9 @@ $closed = getClosedQuery($isClosed);
 $open = getOpenQuery($isOpen);
 $pending = getPendingQuery($isPending);
 
-$sql = "SELECT * FROM Tickets WHERE ({$closed}) OR ({$open}) OR ({$pending}) ORDER BY {$sort} {$order} LIMIT {$limit} OFFSET {$offset}";
+$specialistQuery = getSpecialistQuery();
+
+$sql = "SELECT * FROM Tickets WHERE {$specialistQuery} (({$closed}) OR ({$open}) OR ({$pending})) ORDER BY {$sort} {$order} LIMIT {$limit} OFFSET {$offset}";
 
 $result = $connection->query($sql); // Execute the query
 
@@ -197,6 +200,23 @@ function getPendingQuery($isPending)
     if (!$isPending) return 'FALSE';
     
     return "ResolutionID IS NULL AND AssignedSpecialist IS NULL";  
+}
+
+/**
+ * Gets the part of the SQL query for if the logged in employee is an IT Specialist.
+ */
+function getSpecialistQuery()
+{
+    global $connection;
+    
+    if (isset($_GET['specialist']) && isset($_GET['specialistID']) && $_GET['specialist'] === 'true')
+    {
+        $employeeID = getsecureText($_GET['specialistID'], $connection, true);
+        
+        return "AssignedSpecialist={$employeeID} AND";
+    }
+    
+    return '';
 }
 
 ?>
