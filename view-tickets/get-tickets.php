@@ -24,7 +24,7 @@ $closed = getClosedQuery($isClosed);
 $open = getOpenQuery($isOpen);
 $pending = getPendingQuery($isPending);
 
-$sql = "SELECT * FROM Tickets WHERE ({$closed}) OR ({$open}) OR ({$pending}) ORDER BY {$sort} {$order} LIMIT {$limit} OFFSET {$offset}";
+$sql = "SELECT * FROM Tickets JOIN Employees ON AssignedSpecialist = EmployeeID WHERE ({$closed}) OR ({$open}) OR ({$pending}) ORDER BY {$sort} {$order} LIMIT {$limit} OFFSET {$offset}";
 
 $result = $connection->query($sql); // Execute the query
 
