@@ -6,7 +6,7 @@ $errorMessage = '';
 
 if (!isset($_POST['submitted'])) return;
 
-if (!isset($_POST['employee-id']) || strlen($_POST['employee-id']) === 0)
+if (!isset($_POST['username']) || strlen($_POST['username']) === 0)
 {
     $usernameMessage = '<p class="text-error">Username cannot be blank.</p>';
     return;
@@ -27,10 +27,10 @@ if (!$connection)
     return;
 }
 
-$sqlEmployeeId = getSecureText($_POST['employee-id'], $connection, true);
+$sqlUsername = getSecureText($_POST['username'], $connection, true);
 $sqlPassword = getSecureText($_POST['password'], $connection, true);
 
-$sql = "SELECT EmployeeID, Password FROM EmployeeLogins WHERE EmployeeID={$sqlEmployeeId}";
+$sql = "SELECT EmployeeID, Username, Password FROM EmployeeLogins WHERE Username={$sqlUsername}";
 
 $result = $connection->query($sql);
 
