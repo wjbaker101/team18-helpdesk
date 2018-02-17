@@ -50,6 +50,7 @@ $employee = $result->fetch_assoc();
 
 if (!password_verify($sqlPassword, $employee['Password']))
 {
+    $employee = null;
     $errorMessage = '<p class="text-error">Incorrect login details.</p>';
     return;
 }
