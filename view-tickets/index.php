@@ -62,9 +62,14 @@ $nextPageNumber = $pageNumber + 1;
         <script>
             'use strict';
             
-            let pageNumber = 1;
+            let pageNumber = 1; // Current page number
 
+            /**
+             * Requests the server for a list of tickets using options from the sorting and filter.
+             */
             var getTickets = function getTickets() {
+                
+                // Defines the options
                 var options = {
                     sort: document.querySelector('[name=sorting]:checked').value,
                     descendingOrder: document.querySelector('[name=order]').checked,
@@ -76,6 +81,7 @@ $nextPageNumber = $pageNumber + 1;
                 
                 var http = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
 
+                // Displays tickets when response has been recieved
                 http.onreadystatechange = function () {
                     if (http.readyState === XMLHttpRequest.DONE) {
                         if (http.status === 200) {
@@ -86,6 +92,7 @@ $nextPageNumber = $pageNumber + 1;
                     }
                 };
 
+                // Create parameters to send to the server
                 var parameters = '?sort=' + options.sort + '&order=' + options.descendingOrder + '&pending=' + options.showPending + '&open=' + options.showOpen + '&closed=' + options.showClosed + '&page=' + options.page;
 
                 http.open('GET', 'get-tickets.php' + parameters, true);
@@ -93,6 +100,10 @@ $nextPageNumber = $pageNumber + 1;
                 http.send();
             };
             
+            /**
+             * Increments the page number by the given value.
+             * Keeps number within the bounds if exceeded.
+             */
             const incrementPageNumber = (value) =>
             {
                 pageNumber += value;
@@ -100,6 +111,9 @@ $nextPageNumber = $pageNumber + 1;
                 if (pageNumber < 1) pageNumber = 1;
             };
             
+            /**
+             * Initialises the buttons to increment or decrement the page number.
+             */
             const initPageButtons = () =>
             {
                 const leftButton = document.querySelector('.page-left');
@@ -128,6 +142,9 @@ $nextPageNumber = $pageNumber + 1;
 
             window.addEventListener('load', () => getTickets());
 
+            /**
+             * Loads the input elements that should refresh the ticket list.
+             */
             window.addEventListener('load', function () {
                 var ticketInputs = [...document.querySelectorAll('.tickets-input')];
 
