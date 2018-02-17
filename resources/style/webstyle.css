@@ -400,6 +400,33 @@ body > nav[role=navigation]
     color: #fff;
 }
 
+body > footer
+{
+    padding: 30px 15px;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+}
+
+body > footer .content
+{
+    width: 1024px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body > .content-width
+{
+    /* window_height - header_height - footer_height */
+    min-height: calc(100vh - 87px - 269px);
+}
+
+.font-small-button
+{
+    font-size: 10px;
+    padding: 0.2em 0.5em;
+}
+
 button,
 .button
 {
