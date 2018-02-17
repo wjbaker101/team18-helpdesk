@@ -30,7 +30,7 @@ if (!$connection)
 $sqlUsername = getSecureText($_POST['username'], $connection, true);
 $sqlPassword = getSecureText($_POST['password'], $connection, true);
 
-$sql = "SELECT EmployeeID, Username, Password FROM EmployeeLogins WHERE Username={$sqlUsername}";
+$sql = "SELECT EmployeeID, Username, Password FROM EmployeeLogins WHERE Username='{$sqlUsername}'";
 
 $result = $connection->query($sql);
 
