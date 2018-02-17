@@ -77,6 +77,8 @@ $nextPageNumber = $pageNumber + 1;
                     showOpen: document.querySelector('[name=show-open]').checked,
                     showClosed: document.querySelector('[name=show-closed]').checked,
                     page: pageNumber,
+                    specialist: <?php echo ($employee['JobTitle'] === 'IT Specialist') ? 'true' : 'false'; ?>,
+                    specialistID: <?= $employee['EmployeeID'] ?>,
                 };
                 
                 var http = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
