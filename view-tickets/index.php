@@ -61,6 +61,8 @@ $nextPageNumber = $pageNumber + 1;
         
         <script>
             'use strict';
+            
+            let pageNumber = 1;
 
             var getTickets = function getTickets() {
                 var options = {
@@ -69,9 +71,9 @@ $nextPageNumber = $pageNumber + 1;
                     showPending: document.querySelector('[name=show-pending]').checked,
                     showOpen: document.querySelector('[name=show-open]').checked,
                     showClosed: document.querySelector('[name=show-closed]').checked,
-                    page: <?php echo $pageNumber; ?>,
+                    page: pageNumber,
                 };
-
+                
                 var http = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
 
                 http.onreadystatechange = function () {
@@ -84,14 +86,47 @@ $nextPageNumber = $pageNumber + 1;
                     }
                 };
 
-                var parameters = '?sort=' + options.sort + '&order=' + options.descendingOrder + '&pending=' + options.showPending + '&open=' + options.showOpen + '&closed=' + options.showClosed + '&page=<?php echo $pageNumber; ?>';
+                var parameters = '?sort=' + options.sort + '&order=' + options.descendingOrder + '&pending=' + options.showPending + '&open=' + options.showOpen + '&closed=' + options.showClosed + '&page=' + options.page;
 
                 http.open('GET', 'get-tickets.php' + parameters, true);
 
                 http.send();
             };
+            
+            const incrementPageNumber = (value) =>
+            {
+                pageNumber += value;
+                
+                if (pageNumber < 1) pageNumber = 1;
+            };
+            
+            const initPageButtons = () =>
+            {
+                const leftButton = document.querySelector('.page-left');
+                const rightButton = document.querySelector('.page-right');
+                
+                const pageNumberElement = document.querySelector('.page-number');
+                
+                leftButton.addEventListener('click', () =>
+                {
+                    incrementPageNumber(-1);
+                    
+                    getTickets(pageNumber);
+                    
+                    pageNumberElement.innerHTML = `Page ${pageNumber}`;
+                });
+                
+                rightButton.addEventListener('click', () =>
+                {
+                    incrementPageNumber(1);
+                    
+                    getTickets(pageNumber);
+                    
+                    pageNumberElement.innerHTML = `Page ${pageNumber}`;
+                });
+            };
 
-            window.addEventListener('load', getTickets);
+            window.addEventListener('load', () => getTickets());
 
             window.addEventListener('load', function () {
                 var ticketInputs = [...document.querySelectorAll('.tickets-input')];
@@ -99,6 +134,8 @@ $nextPageNumber = $pageNumber + 1;
                 ticketInputs.forEach(function (input) {
                     input.addEventListener('change', getTickets);
                 });
+                
+                initPageButtons();
             });
         </script>
     </head>
@@ -174,11 +211,9 @@ $nextPageNumber = $pageNumber + 1;
                         <tbody class="tickets-container"></tbody>
                     </table>
                     <h3>Page</h3>
-                    <?php if ($pageNumber > 1) { ?>
-                    <a href="/view-tickets/?page=<?php echo $prevPageNumber; ?>"><button class="page-left">&larr;</button></a>
-                    <?php } ?>
-                    <span>Page <?php echo $pageNumber; ?></span>
-                    <a href="/view-tickets/?page=<?php echo $nextPageNumber; ?>"><button class="page-right">&rarr;</button></a>
+                    <a><button class="page-left">&larr;</button></a>
+                    <span class="page-number">Page <?php echo $pageNumber; ?></span>
+                    <a><button class="page-right">&rarr;</button></a>
                 </div>
             </div>
         </div>
