@@ -138,7 +138,7 @@ function getQueryOrder()
  */
 function getQueryLimitAndOffset($page)
 {
-    $limit = 15;
+    $limit = 13;
     
     // Gets the offset using the current page number and max tickets on each page
     $offset = ($page - 1) * $limit;
