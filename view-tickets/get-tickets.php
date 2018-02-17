@@ -16,7 +16,15 @@ $limitAndOffset = getQueryLimitAndOffset(getPageNumber());
 $limit = $limitAndOffset['limit'];
 $offset = $limitAndOffset['offset'];
 
-$sql = "SELECT * FROM Tickets ORDER BY {$sort} {$order} LIMIT {$limit} OFFSET {$offset}";
+$isClosed =     (isset($_GET['closed'])     && $_GET['closed'] === 'true')      ? true : false;
+$isOpen =       (isset($_GET['open'])       && $_GET['open'] === 'true')        ? true : false;
+$isPending =    (isset($_GET['pending'])    && $_GET['pending'] === 'true')     ? true : false;
+
+$closed = getClosedQuery($isClosed);
+$open = getOpenQuery($isOpen);
+$pending = getPendingQuery($isPending);
+
+$sql = "SELECT * FROM Tickets WHERE ({$closed}) OR ({$open}) OR ({$pending}) ORDER BY {$sort} {$order} LIMIT {$limit} OFFSET {$offset}";
 
 $result = $connection->query($sql); // Execute the query
 
@@ -32,36 +40,15 @@ while ($ticket = $result->fetch_assoc())
     
     if ($ticket['ResolutionID'] !== null)
     {
-        if (!isset($_GET['closed']) || $_GET['closed'] !== 'true')
-        {
-            continue;
-        }
-        else
-        {
-            $status = 'closed';
-        }
+        $status = 'closed';
     }
     else if ($ticket['AssignedSpecialist'] !== null)
     {
-        if (!isset($_GET['open']) || $_GET['open'] !== 'true')
-        {
-            continue;
-        }
-        else
-        {
-            $status = 'open';
-        }
+        $status = 'open';
     }
     else
     {
-        if (!isset($_GET['pending']) || $_GET['pending'] !== 'true')
-        {
-            continue;
-        }
-        else
-        {
-            $status = 'pending';
-        }
+        $status = 'pending';
     }
 
     $priority = '';
@@ -151,7 +138,7 @@ function getQueryOrder()
  */
 function getQueryLimitAndOffset($page)
 {
-    $limit = 15;
+    $limit = 13;
     
     // Gets the offset using the current page number and max tickets on each page
     $offset = ($page - 1) * $limit;
@@ -180,6 +167,36 @@ function getPageNumber()
     }
     
     return 1; // Default page number, if no page is specified
+}
+
+/**
+ * Gets part of the SQL query for if the ticket is closed.
+ */
+function getClosedQuery($isClosed)
+{
+    if (!$isClosed) return 'FALSE';
+    
+    return "ResolutionID IS NOT NULL";
+}
+
+/**
+ * Gets part of the SQL query for if the ticket is open.
+ */
+function getOpenQuery($isOpen)
+{
+    if (!$isOpen) return 'FALSE';
+    
+    return "ResolutionID IS NULL AND AssignedSpecialist IS NOT NULL";
+}
+
+/**
+ * Gets part of the SQL query for if the ticket is pending.
+ */
+function getPendingQuery($isPending)
+{
+    if (!$isPending) return 'FALSE';
+    
+    return "ResolutionID IS NULL AND AssignedSpecialist IS NULL";  
 }
 
 ?>
