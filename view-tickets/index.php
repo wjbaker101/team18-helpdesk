@@ -161,7 +161,7 @@ $nextPageNumber = $pageNumber + 1;
         <?php include(INCLUDE_HEADER) ?>
         <nav role="navigation" class="padding-small clearfix">
             <div class="float-left">
-                <a href="/overview.php">&larr; Return to Overview page</a>
+                <a href="/overview/">&larr; Return to Overview page</a>
             </div>
             <div class="float-right">
             </div>

@@ -60,6 +60,6 @@ $_SESSION['Password'] = $employee['Password'];
 
 $errorMessage = '<p>Successfully logged in.</p>';
 
-header('Location: /view-tickets/');
+header('Location: /overview/');
 
 ?>
