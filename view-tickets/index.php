@@ -95,7 +95,7 @@ $nextPageNumber = $pageNumber + 1;
                 };
 
                 // Create parameters to send to the server
-                var parameters = '?sort=' + options.sort + '&order=' + options.descendingOrder + '&pending=' + options.showPending + '&open=' + options.showOpen + '&closed=' + options.showClosed + '&page=' + options.page;
+                const parameters = `?sort=${options.sort}&order=${options.descendingOrder}&pending=${options.showPending}&open=${options.showOpen}&closed=${options.showClosed}&page=${options.page}&specialist=${options.specialist}&specialistID=${options.specialistID}`;
 
                 http.open('GET', 'get-tickets.php' + parameters, true);
 
