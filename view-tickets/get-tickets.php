@@ -3,6 +3,7 @@
 // Prepare database connection
 // And check whether it was successful
 require_once($_SERVER['DOCUMENT_ROOT'] . '/resources/page/utils/database.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/resources/page/utils/cleanup-utils.php');
 
 if (!$connection) return;
 
@@ -206,6 +207,8 @@ function getPendingQuery($isPending)
  */
 function getSpecialistQuery()
 {
+    global $connection;
+    
     if (isset($_GET['specialist']) && isset($_GET['specialistID']) && $_GET['specialist'] === 'true')
     {
         $employeeID = getsecureText($_GET['specialistID'], $connection, true);
