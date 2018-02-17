@@ -32,36 +32,15 @@ while ($ticket = $result->fetch_assoc())
     
     if ($ticket['ResolutionID'] !== null)
     {
-        if (!isset($_GET['closed']) || $_GET['closed'] !== 'true')
-        {
-            continue;
-        }
-        else
-        {
-            $status = 'closed';
-        }
+        $status = 'closed';
     }
     else if ($ticket['AssignedSpecialist'] !== null)
     {
-        if (!isset($_GET['open']) || $_GET['open'] !== 'true')
-        {
-            continue;
-        }
-        else
-        {
-            $status = 'open';
-        }
+        $status = 'open';
     }
     else
     {
-        if (!isset($_GET['pending']) || $_GET['pending'] !== 'true')
-        {
-            continue;
-        }
-        else
-        {
-            $status = 'pending';
-        }
+        $status = 'pending';
     }
 
     $priority = '';
