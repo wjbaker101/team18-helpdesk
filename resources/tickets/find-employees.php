@@ -19,6 +19,34 @@ if (!$result || $result->num_rows === 0) return;
 
 while ($employee = $result->fetch_assoc())
 {
+    $specialistInformation = '';
+    
+    if (isset($_GET['specialist']))
+    {
+        $sql = "SELECT Specialisation FROM Specialisations WHERE EmployeeID={$employee['EmployeeID']}";
+        
+        $result2 = $connection->query($sql);
+        
+        $specialisations = array();
+        
+        if ($result2 && $result2->num_rows > 0)
+        {
+            while ($specialisation = $result2->fetch_assoc())
+            {
+                $specialisations[] = $specialisation['Specialisation'];
+            }
+        
+            $specialisationsFormatted = join(', ', $specialisations);
+
+            $specialistInformation = "
+                <p>
+                    <strong>Specialisations:</strong><br>
+                    {$specialisationsFormatted}
+                </p>
+            ";
+        }
+    }
+    
     echo "
         <div class=\"content-section hpadding-small\">
             <h3>({$employee['EmployeeID']}) {$employee['FirstName']} {$employee['Surname']}</h3>
@@ -26,6 +54,7 @@ while ($employee = $result->fetch_assoc())
                 <strong>Department:</strong> {$employee['Department']}<br>
                 <strong>Job Title:</strong> {$employee['JobTitle']}
             </p>
+            <p>{$specialistInformation}</p>
         </div>
     ";
 }
