@@ -86,8 +86,8 @@ $connection->close();
                                 data: [<?= $helpdesk ?>, <?= $specialist ?>],
                                 backgroundColor:
                                 [
-                                    '#000',
-                                    '#000',
+                                    '#60bd68',
+                                    '#f15854',
                                 ]
                             }
                         ],
@@ -121,14 +121,10 @@ $connection->close();
         </nav>
         <div class="content-width clearfix">
             <div class="padding-small">
-                <div class="bg-white shadow">
-                    <div class="column-container">
-                        <div class="column l6 m12 padding-small text-centered">
-                            <h2>Tickets Solved by Employee Types Ratio</h2>
-                            <div class="canvas-container vpadding-mid">
-                                <canvas class="analytics-canvas" width="250" height="250"></canvas>
-                            </div>
-                        </div>
+                <div class="bg-white shadow vpadding-mid text-centered">
+                    <h2>Tickets Solved by Employee Types Ratio</h2>
+                    <div class="canvas-container vpadding-mid">
+                        <canvas class="analytics-canvas" width="250" height="250"></canvas>
                     </div>
                 </div>
             </div>
