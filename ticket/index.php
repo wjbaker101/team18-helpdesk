@@ -44,13 +44,15 @@ if (!isset($ticket))
                                 const response = http.responseText;
 
                                 document.querySelector('.delete-ticket-message').innerHTML = response;
+                                
+                                window.location.href = '/view-tickets/';
                             }
                         }
                     };
                     
                     const ticketID = <?= $ticket['TicketID'] ?>;
 
-                    http.open('GET', `delete-ticket.php?id=${ticketID}`, true);
+                    http.open('GET', `/resources/tickets/delete-ticket.php?id=${ticketID}`, true);
 
                     http.send();
                 }
@@ -201,7 +203,7 @@ if (!isset($ticket))
                     <div class="content-section padding-small">
                         <h2>Actions</h2>
                         <button class="delete-ticket-button">Delete Ticket</button>
-                        <p class="delete-ticket-message text-error"></p>
+                        <div class="delete-ticket-message"></div>
                     </div>
                 </div>
             </div>
