@@ -118,7 +118,7 @@ if (!isset($ticket))
                         <?php if ($ticket['OperatingSystemID'] !== null) { ?>
                         <p>
                             <strong>Operating System:</strong>
-                            <span><?= $ticket['OperatingSystemID'] ?></span>
+                            <span><?= $ticket['OperatingSystemID'] ?> v<?= $ticket['OperatingSystemVersion'] ?></span>
                             <?= $osLicense ?>
                         </p>
                         <?php } ?>
