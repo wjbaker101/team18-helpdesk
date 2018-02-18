@@ -177,6 +177,14 @@ if (!isset($ticket))
                     </div>
                     <?php } ?>
                 </div>
+                <?php if ($ticket['ResolutionID'] === null) { ?>
+                <div class="bg-white shadow section">
+                    <div class="content-section padding-small">
+                        <h2>Close Ticket</h2>
+                        <p><a href="/close-ticket/?id=<?= $ticket['TicketID'] ?>"><button>Close Ticket</button></a></p>
+                    </div>
+                </div>
+                <?php } ?>
                 <div class="bg-white shadow section">
                     <div class="content-section padding-small">
                         <h2>Call Logs
