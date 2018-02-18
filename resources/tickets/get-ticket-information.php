@@ -14,7 +14,7 @@ Ticket.*,
 
 Resolution.*,
 
-Hardware.*,
+Hardware.HardwareSerialID AS Hardware_ID,
 
 OperatingSystems.Name AS OS_Name,
 OperatingSystems.DeveloperCompany AS OS_Developer,
@@ -85,11 +85,25 @@ switch ($ticket['Priority'])
         break;
 }
 
-$osLicense = '';
+$softwareLicense = '';
 
 if ($ticket['Software_Name'] !== null)
 {
-    $osLicense = '<span style="color:#4e4">&#9745;</span>';
+    $softwareLicense = "<br><span class=\"licensed\">&#9745;</span> <span>v{$ticket['Software_LastestVersion']}</span>";
+}
+
+$hardwareLicense = '';
+
+if ($ticket['Hardware_ID'] !== null)
+{
+    $hardwareLicense = "<br><span class=\"licensed\">&#9745;</span> Hardware Found";
+}
+
+$osLicense = '';
+
+if ($ticket['OS_Name'] !== null)
+{
+    $osLicense = "<br><span class=\"licensed\">&#9745;</span> <span>v{$ticket['OS_LatestVersion']}</span>";
 }
 
 ?>
