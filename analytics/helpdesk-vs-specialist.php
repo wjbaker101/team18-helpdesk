@@ -114,7 +114,7 @@ $connection->close();
         <?php include(INCLUDE_HEADER) ?>
         <nav role="navigation" class="padding-small clearfix">
             <div class="float-left">
-                <a href="/view-tickets/">&larr; Return to Tickets Overview</a>
+                <a href="/analytics/">&larr; Return to Analytics</a>
             </div>
             <div class="float-right">
             </div>
