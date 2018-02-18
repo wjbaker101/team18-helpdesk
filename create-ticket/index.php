@@ -241,7 +241,7 @@ include('create.php');
                             <h2>Problem Information</h2>
                             <h4><abbr title="The type of problem this ticket is categorised as.">Problem Type</abbr></h4>
                             <!--<input class="problem-type-input" type="text" name="problem-type" value="<?php if (isset($_POST['problem-type'])) echo htmlspecialchars($_POST['problem-type']); ?>">-->
-                            <select name="problem-type">
+                            <select class="problem-type-input" name="problem-type">
                                 <option>Network</option>
                                 <option>Hardware</option>
                                 <option>Software</option>
@@ -259,19 +259,17 @@ include('create.php');
                                 <div class="column l6 s12">
                                     <h4><abbr title="The version number of the operating system.">Operating System Version</abbr></h4>
                                     <input class="os-version-input" type="text" name="os-version" placeholder="5.7.1.0" value="<?php if (isset($_POST['os-version'])) echo htmlspecialchars($_POST['os-version']); ?>">
-                                    <?= $messages->operatingSystem ?>
                                 </div>
                             </div>
                             <div class="column-container">
                                 <div class="column l6 s12">
                                     <h4><abbr title="The name of the software related to the problem.">Software Name</abbr></h4>
                                     <input class="software-input" type="text" name="software" placeholder="Google Chrome" value="<?php if (isset($_POST['software'])) echo htmlspecialchars($_POST['software']); ?>">
-                                    <?= $messages->operatingSystem ?>
+                                    <?= $messages->software ?>
                                 </div>
                                 <div class="column l6 s12">
                                     <h4><abbr title="The version number of the software.">Software Version</abbr></h4>
                                     <input class="software-version-input" type="text" name="software-version" placeholder="12.3.6.1" value="<?php if (isset($_POST['software-version'])) echo htmlspecialchars($_POST['software-version']); ?>">
-                                    <?= $messages->operatingSystem ?>
                                 </div>
                             </div>
                         </div>
