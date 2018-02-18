@@ -1,5 +1,6 @@
 <?php
 
+// Messages to display if there is an error
 $messages = (object)
 [
     'summary' => '',
@@ -10,12 +11,15 @@ $messages = (object)
     'problemType' => '',
     'hardwareSerialID' => '',
     'operatingSystem' => '',
+    'software' => '',
     'error' => '',
     'specialist' => '',
     'resolutionDescription' => '',
 ];
 
 if (!isset($_POST['submitted'])) return;
+
+// Check whether required fields are valid
 
 if (!isset($_POST['summary']) || strlen($_POST['summary']) === 0)
 {
@@ -61,6 +65,7 @@ $sqlEntryDate = (new DateTime())->format('Y-m-d H:i:s');
 
 $sqlResolutionID = 'null';
 
+// Creates the resolution, then gets the resolution's ID
 if (isset($_POST['resolution']))
 {
     if (!isset($_POST['resolution-description']) || strlen($_POST['resolution-description']) === 0)
@@ -90,6 +95,7 @@ if (isset($_POST['resolution']))
 
 $sqlAssignedSpecialist = 'null';
 
+// Check if the specialist is actually an IT specialist
 if (isset($_POST['assign-specialist']))
 {
     if (!isset($_POST['specialist-id']) || strlen($_POST['specialist-id']) === 0)
@@ -101,7 +107,7 @@ if (isset($_POST['assign-specialist']))
     {
         $sqlSpecialistID = getSecureText($_POST['specialist-id'], $connection, true);
 
-        $sql = "SELECT EmployeeID FROM Employees WHERE EmployeeID={$sqlSpecialistID}";
+        $sql = "SELECT EmployeeID FROM Employees WHERE EmployeeID={$sqlSpecialistID} AND JobTitle='IT Specialist'";
         
         $result = $connection->query($sql);
         
@@ -122,19 +128,26 @@ if (isset($_POST['assign-specialist']))
     }
 }
 
+// Stores data to be added to the database
 $sqlSummary = getSecureText($_POST['summary'], $connection, true);
 $sqlDescription = getSecureText($_POST['description'], $connection, true);
 $sqlCallerID = getSecureText($_POST['caller-id'], $connection, true);
 $sqlTelephoneNumber = getSecureText($_POST['telephone-number'], $connection, true);
 $sqlProblemType = getSecureText($_POST['problem-type'], $connection, true);
-$sqlOperatingSystem = isset($_POST['software']) ? getSecureText($_POST['operating-system'], $connection, true) : 'null';
-$sqlSoftware = isset($_POST['software']) ? getSecureText($_POST['software'], $connection, true) : 'null';
-$sqlHardwareSerialID = getSecureText($_POST['hardware-serial-id'], $connection, true);
+$sqlOperatingSystem = getOS();
+$sqlSoftware = getSoftware();
+$sqlHardwareSerialID = getHardwareSerialID();
 $sqlPriority = getSecureText($_POST['priority-group'], $connection, true);
 
-$fields = 'Summary, Description, EntryDate, CallerID, TelephoneNumber, HelpdeskOperator, AssignedSpecialist, ResolutionID, OperatingSystemID, SoftwareID, HardwareSerialID, ProblemType, Priority';
+$sqlSoftwareVersion = '';
+if ($sqlOperatingSystem !== 'null' && isset($_POST['sofware-version'])) $sqlSoftwareVersion = getSecureText($_POST['sofware-version'], $connection, true);
 
-$values = "'{$sqlSummary}', '{$sqlDescription}', '{$sqlEntryDate}', {$sqlCallerID}, '{$sqlTelephoneNumber}', {$sqlHelpdeskOperator}, {$sqlAssignedSpecialist}, {$sqlResolutionID}, '{$sqlOperatingSystem}', '{$sqlSoftware}', '{$sqlHardwareSerialID}', '{$sqlProblemType}', {$sqlPriority}";
+$sqlOSVersion = '';
+if ($sqlSoftware !== 'null' && isset($_POST['os-version'])) $sqlOSVersion = getSecureText($_POST['os-version'], $connection, true);
+
+$fields = 'Summary, Description, EntryDate, CallerID, TelephoneNumber, HelpdeskOperator, AssignedSpecialist, ResolutionID, OperatingSystemID, SoftwareID, HardwareSerialID, ProblemType, Priority, SoftwareVersion, OperatingSystemVersion';
+
+$values = "'{$sqlSummary}', '{$sqlDescription}', '{$sqlEntryDate}', {$sqlCallerID}, '{$sqlTelephoneNumber}', {$sqlHelpdeskOperator}, {$sqlAssignedSpecialist}, {$sqlResolutionID}, {$sqlOperatingSystem}, {$sqlSoftware}, {$sqlHardwareSerialID}, '{$sqlProblemType}', {$sqlPriority}, '{$sqlSoftwareVersion}', '{$sqlOSVersion}'";
 
 $sql = "INSERT INTO Tickets ({$fields}) VALUES ({$values})";
 
@@ -142,7 +155,7 @@ $result = $connection->query($sql);
 
 if (!$result)
 {
-    $messages->error = "<p class=\"text-error\">Unable to create ticket.</p><p>{$connection->error}</p><p>{$sql }</p>";
+    $messages->error = "<p class=\"text-error\">Unable to create ticket.</p><p>{$connection->error}</p><p>{$sql}</p>";
     return;
 }
 
@@ -150,6 +163,60 @@ $ticketID = $connection->insert_id;
 
 $connection->close();
 
-header("Location: /ticket/?id={$ticketID}");
+header("Location: /ticket/?id={$ticketID}"); // Redirect to newly created ticket
+
+/**
+ * Gets the hardware serial id.
+ * Or null if no text was inputted.
+ */
+function getHardwareSerialID()
+{
+    global $connection;
+    
+    if (isset($_POST['hardware-serial-id']) && strlen($_POST['hardware-serial-id']) > 0)
+    {
+        $id = getSecureText($_POST['hardware-serial-id'], $connection, true);
+        
+        return "'{$id}'";
+    }
+    
+    return 'null';
+}
+
+/**
+ * Gets the software.
+ * Or null if no text was inputted.
+ */
+function getSoftware()
+{
+    global $connection;
+    
+    if (isset($_POST['software']) && strlen($_POST['software']) > 0)
+    {
+        $id = getSecureText($_POST['software'], $connection, true);
+        
+        return "'{$id}'";
+    }
+    
+    return 'null';
+}
+
+/**
+ * Gets the operating system.
+ * Or null if no text was inputted.
+ */
+function getOS()
+{
+    global $connection;
+    
+    if (isset($_POST['operating-system']) && strlen($_POST['operating-system']) > 0)
+    {
+        $id = getSecureText($_POST['operating-system'], $connection, true);
+        
+        return "'{$id}'";
+    }
+    
+    return 'null';
+}
 
 ?>
