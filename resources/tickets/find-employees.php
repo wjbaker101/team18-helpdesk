@@ -21,7 +21,7 @@ while ($employee = $result->fetch_assoc())
 {
     $specialistInformation = '';
     
-    if (isset($_GET['specialist']))
+    if (isset($_GET['specialist']) && $_GET['specialist'] === 'true')
     {
         $sql = "SELECT Specialisation FROM Specialisations WHERE EmployeeID={$employee['EmployeeID']}";
         
@@ -64,7 +64,7 @@ while ($employee = $result->fetch_assoc())
  */
 function getSpecialistQuery()
 {
-    if (isset($_GET['specialist']))
+    if (isset($_GET['specialist']) && $_GET['specialist'] === 'true')
     {
         return "JobTitle='IT Specialist' AND";
     }

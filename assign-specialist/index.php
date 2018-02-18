@@ -27,7 +27,7 @@ include('assign.php');
         <style>
             .employee-list-container
             {
-                height: 200px;
+                height: 300px;
                 margin: 15px 0;
                 position: relative;
                 border: 1px solid #ccc;
@@ -37,56 +37,13 @@ include('assign.php');
         
         <?php include(INCLUDE_SCRIPTS) ?>
         
+        <script src="/resources/scripts/employee-search.js" defer></script>
+        
         <script>
-            let isRequesting = false;
-            
-            const requestEmployees = (displayElement, searchTerm = '', onlySpecialist = true) =>
+            window.addEventListener('load', () =>
             {
-                isRequesting = true;
-                
-                const http = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
-
-                http.onreadystatechange = () =>
-                {
-                    if (http.readyState === XMLHttpRequest.DONE)
-                    {
-                        if (http.status === 200)
-                        {
-                            const response = http.responseText;
-
-                            document.querySelector(displayElement).innerHTML = response;
-                            
-                            isRequesting = false;
-                        }
-                    }
-                };
-
-                const specialist = onlySpecialist ? '&specialist=true' : '';
-                
-                const parameters = `?name=${searchTerm}${specialist}`;
-
-                http.open('GET', '/resources/tickets/find-employees.php' + parameters, true);
-
-                http.send();
-            };
-            
-            const initEmployeeSearch = () =>
-            {
-                const input = document.querySelector('.specialist-name-input');
-                
-                input.addEventListener('input', () =>
-                {
-                    document.querySelector('.employee-list-container').innerHTML = '';
-                    
-                    if (input.value.length === 0) return;
-                    
-                    if (isRequesting) return;
-                    
-                    requestEmployees('.employee-list-container', input.value.toLowerCase().trim(), true);
-                });
-            };
-            
-            window.addEventListener('load', initEmployeeSearch);
+                new EmployeeSearch('.specialist-name-input', '.employee-list-container', true);
+            });
         </script>
     </head>
     

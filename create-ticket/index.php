@@ -80,85 +80,14 @@ include('create.php');
         
         <?php include(INCLUDE_SCRIPTS) ?>
         
+        <script src="/resources/scripts/employee-search.js" defer></script>
+        
         <script>
-            const addCollapsableSection = (inputSelector, sectionSelector) =>
-            {
-                const input = document.querySelector(inputSelector);
-                
-                input.addEventListener('change', () =>
-                {
-                    document.querySelector(sectionSelector).classList.toggle('visible', input.checked);
-                });
-            };
-            
             window.addEventListener('load', () =>
             {
-                addCollapsableSection('.specialist-info-enabled', '.specialist-info-details');
-                addCollapsableSection('.close-ticket-enabled', '.close-ticket-details');
+                new EmployeeSearch('.caller-name-input', '.caller-employees');
+                new EmployeeSearch('.specialist-name-input', '.specialist-employees', true);
             });
-            
-            let isRequesting = false;
-            
-            const requestEmployees = (displayElement, searchTerm = '', onlySpecialist = true) =>
-            {
-                isRequesting = true;
-                
-                const http = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
-
-                http.onreadystatechange = () =>
-                {
-                    if (http.readyState === XMLHttpRequest.DONE)
-                    {
-                        if (http.status === 200)
-                        {
-                            const response = http.responseText;
-
-                            document.querySelector(displayElement).innerHTML = response;
-                            
-                            isRequesting = false;
-                        }
-                    }
-                };
-
-                const specialist = onlySpecialist ? '&specialist=true' : '';
-                
-                const parameters = `?name=${searchTerm}${specialist}`;
-
-                http.open('GET', '/resources/tickets/find-employees.php' + parameters, true);
-
-                http.send();
-            };
-            
-            const initEmployeeSearches = () =>
-            {
-                const callerSearchInput = document.querySelector('.caller-name-input');
-                
-                callerSearchInput.addEventListener('input', () =>
-                {
-                    document.querySelector('.employee-list-container.caller-employees').innerHTML = '';
-                    
-                    if (callerSearchInput.value.length === 0) return;
-                    
-                    if (isRequesting) return;
-                    
-                    requestEmployees('.employee-list-container.caller-employees', callerSearchInput.value.toLowerCase().trim(), false);
-                });
-                
-                const specialistSearchInput = document.querySelector('.specialist-name-input');
-                
-                specialistSearchInput.addEventListener('input', () =>
-                {
-                    document.querySelector('.employee-list-container.specialist-employees').innerHTML = '';
-                    
-                    if (specialistSearchInput.value.length === 0) return;
-                    
-                    if (isRequesting) return;
-                    
-                    requestEmployees('.employee-list-container.specialist-employees', specialistSearchInput.value.toLowerCase().trim(), true);
-                });
-            };
-            
-            window.addEventListener('load', initEmployeeSearches);
         </script>
     </head>
     
