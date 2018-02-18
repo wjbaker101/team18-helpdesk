@@ -11,13 +11,13 @@ if (!isset($_POST['submitted'])) return;
 
 if (!isset($_POST['caller-id']) || strlen($_POST['caller-id']) === 0)
 {
-    $messages->summary = '<p class="text-error">Caller ID cannot be blank.</p>';
+    $messages->callerID = '<p class="text-error">Caller ID cannot be blank.</p>';
     return;
 }
 
 if (!isset($_POST['telephone-number']) || strlen($_POST['telephone-number']) === 0)
 {
-    $messages->priority = '<p class="text-error">Telephone number cannot be blank.</p>';
+    $messages->telephoneNumber = '<p class="text-error">Telephone number cannot be blank.</p>';
     return;
 }
 

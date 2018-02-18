@@ -40,7 +40,7 @@ include('assign.php');
         <script>
             let isRequesting = false;
             
-            const requestEmployees = (searchTerm = '') =>
+            const requestEmployees = (displayElement, searchTerm = '', onlySpecialist = true) =>
             {
                 isRequesting = true;
                 
@@ -54,14 +54,16 @@ include('assign.php');
                         {
                             const response = http.responseText;
 
-                            document.querySelector('.employee-list-container').innerHTML = response;
+                            document.querySelector(displayElement).innerHTML = response;
                             
                             isRequesting = false;
                         }
                     }
                 };
 
-                const parameters = `?name=${searchTerm}`;
+                const specialist = onlySpecialist ? '&specialist=true' : '';
+                
+                const parameters = `?name=${searchTerm}${specialist}`;
 
                 http.open('GET', '/resources/tickets/find-employees.php' + parameters, true);
 
@@ -70,7 +72,7 @@ include('assign.php');
             
             const initEmployeeSearch = () =>
             {
-                const input = document.querySelector('.search-employee-input');
+                const input = document.querySelector('.specialist-name-input');
                 
                 input.addEventListener('input', () =>
                 {
@@ -80,7 +82,7 @@ include('assign.php');
                     
                     if (isRequesting) return;
                     
-                    requestEmployees(input.value.toLowerCase().trim());
+                    requestEmployees('.employee-list-container', input.value.toLowerCase().trim(), true);
                 });
             };
             
@@ -104,15 +106,15 @@ include('assign.php');
                     <h2>Assign Specialist to Ticket <?= $ticket['TicketID'] ?></h2>
                     <div class="column-container">
                         <div class="column l6 s12 v-content-section">
-                            <h4><abbr title="Specialist ID of the employee.">Specialist ID</abbr></h4>
+                            <h4>Specialist ID</h4>
                             <input class="specialist-id-input" type="text" name="specialist-id" value="<?php if (isset($_POST['specialist-id'])) echo htmlspecialchars($_POST['specialist-id']); ?>">
                             <?= $specialistMessage ?>
-                            <p><button name="submitted" value="1">Submit New Specialist</button></p>
+                            <p><button type="submit" name="submitted" value="1">Assign</button></p>
                         </div>
                         <div class="column l6 s12 v-content-section">
                             <h4>Search Specialist Name</h4>
-                            <input class="search-employee-input" type="text">
-                            <div class="employee-list-container"></div>
+                            <input class="specialist-name-input" type="text">
+                            <div class="employee-list-container specialist-employees"></div>
                         </div>
                     </div>
                 </form>
