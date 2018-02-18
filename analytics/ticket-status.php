@@ -129,7 +129,7 @@ $connection->close();
         <?php include(INCLUDE_HEADER) ?>
         <nav role="navigation" class="padding-small clearfix">
             <div class="float-left">
-                <a href="/overview/">&larr; Return to Overview</a>
+                <a href="/analytics/">&larr; Return to Analytics</a>
             </div>
             <div class="float-right">
             </div>
@@ -137,22 +137,9 @@ $connection->close();
         <div class="content-width clearfix">
             <div class="padding-small">
                 <div class="bg-white shadow vpadding-mid text-centered">
-                    <h1>Select a Graph to View</h1>
-                    <div class="column-container">
-                        <div class="column l6 s12">
-                            <p><a href="ticket-status.php"><button class="analytics-button">Ticket Status Ratio</button></a></p>
-                        </div>
-                        <div class="column l6 s12">
-                            <p><a href="helpdesk-vs-specialist.php"><button class="analytics-button">Helpdesk vs Specialist</button></a></p>
-                        </div>
-                    </div>
-                    <div class="column-container">
-                        <div class="column l6 s12">
-                            <p><a href="solve-time.php"><button class="analytics-button">Ticket Solve Time</button></a></p>
-                        </div>
-                        <div class="column l6 s12">
-                            
-                        </div>
+                    <h2>Ticket Status Ratio</h2>
+                    <div class="canvas-container vpadding-mid">
+                        <canvas class="analytics-canvas" width="250" height="250"></canvas>
                     </div>
                 </div>
             </div>

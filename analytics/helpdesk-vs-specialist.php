@@ -6,7 +6,7 @@ require_once(ROOT . '/resources/page/utils/database.php');
 
 if (!$connection) return;
 
-$sql = 'SELECT AssignedSpecialist, ResolutionID FROM Tickets';
+$sql = 'SELECT Resolutions.EmployeeID, Employees.JobTitle FROM Resolutions, Employees WHERE Resolutions.EmployeeID=Employees.EmployeeID';
 
 $result = $connection->query($sql);
 
@@ -17,14 +17,8 @@ $specialist = 0;
 
 while ($ticket = $result->fetch_assoc())
 {
-    if ($ticket['ResolutionID'] !== null && $ticket['AssignedSpecialist'] == null)
-    {
-        $helpdesk++;
-    }
-    else if ($ticket['AssignedSpecialist'] !== null && $ticket['ResolutionID'] !== null)
-    {
-        $specialist++;
-    }
+    if ($ticket['JobTitle'] === 'IT Specialist') $specialist++;
+    else $helpdesk ++;
 }
 
 $connection->close();
@@ -86,8 +80,8 @@ $connection->close();
                                 data: [<?= $helpdesk ?>, <?= $specialist ?>],
                                 backgroundColor:
                                 [
-                                    '#000',
-                                    '#000',
+                                    '#60bd68',
+                                    '#f15854',
                                 ]
                             }
                         ],
@@ -114,21 +108,17 @@ $connection->close();
         <?php include(INCLUDE_HEADER) ?>
         <nav role="navigation" class="padding-small clearfix">
             <div class="float-left">
-                <a href="/view-tickets/">&larr; Return to Tickets Overview</a>
+                <a href="/analytics/">&larr; Return to Analytics</a>
             </div>
             <div class="float-right">
             </div>
         </nav>
         <div class="content-width clearfix">
             <div class="padding-small">
-                <div class="bg-white shadow">
-                    <div class="column-container">
-                        <div class="column l6 m12 padding-small text-centered">
-                            <h2>Tickets Solved by Employee Types Ratio</h2>
-                            <div class="canvas-container vpadding-mid">
-                                <canvas class="analytics-canvas" width="250" height="250"></canvas>
-                            </div>
-                        </div>
+                <div class="bg-white shadow vpadding-mid text-centered">
+                    <h2>Tickets Solved by Employee Types Ratio</h2>
+                    <div class="canvas-container vpadding-mid">
+                        <canvas class="analytics-canvas" width="250" height="250"></canvas>
                     </div>
                 </div>
             </div>

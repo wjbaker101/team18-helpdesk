@@ -1,36 +1,35 @@
 <?php
 
 require ($_SERVER['DOCUMENT_ROOT'] . "/resources/page/page.php");
-
 require_once(ROOT . '/resources/page/utils/database.php');
 
 if (!$connection) return;
 
-$sql = 'SELECT AssignedSpecialist, ResolutionID FROM Tickets';
+$sql = "SELECT TicketID, EntryDate, CloseDate FROM Tickets, Resolutions WHERE Tickets.ResolutionID=Resolutions.ResolutionID ORDER BY EntryDate ASC";
 
 $result = $connection->query($sql);
 
 if (!$result || $result->num_rows === 0) return;
 
-$closed = 0;
-$open = 0;
-$pending = 0;
+$graphValues = array();
+$graphLabels = array();
 
 while ($ticket = $result->fetch_assoc())
 {
-    if ($ticket['ResolutionID'] !== null)
-    {
-        $closed++;
-    }
-    else if ($ticket['AssignedSpecialist'] !== null)
-    {
-        $open++;
-    }
-    else
-    {
-        $pending++;
-    }
+    $entryDate = new DateTime($ticket['EntryDate']);
+    $closeDate = new DateTime($ticket['CloseDate']);
+    
+    $difference = $closeDate->diff($entryDate);
+    
+    $hours = $difference->days * 24;
+    $hours += $difference->h;
+    
+    $graphValues[] = $hours;
+    
+    $graphLabels[] = '"Ticket ' . $ticket['TicketID'] . '"';
 }
+
+$averageSolveTime = array_sum($graphValues) / count($graphValues);
 
 $connection->close();
 
@@ -69,13 +68,6 @@ $connection->close();
                 margin-left: auto;
                 margin-right: auto;
             }
-            
-            .analytics-button
-            {
-                font-size: 28px;
-                padding: 20px;
-                width: 200px;
-            }
         </style>
         
         <?php include(INCLUDE_SCRIPTS) ?>
@@ -86,38 +78,28 @@ $connection->close();
             window.addEventListener('load', () =>
             {
                 const graphics = document.querySelector('.analytics-canvas').getContext('2d');
-
                 const chart = new Chart(graphics,
                 {
-                    type: 'pie',
+                    type: 'bar',
                     data:
                     {
                         datasets:
                         [
                             {
-                                data: [<?= $open ?>, <?= $closed ?>, <?= $pending ?>],
-                                backgroundColor:
-                                [
-                                    '#60bd68',
-                                    '#5da5da',
-                                    '#f15854',
-                                ]
+                                label: "Solve Time (Hours)",
+                                data: [<?php echo join(', ', $graphValues); ?>],
+                                backgroundColor: '#5da5da',
                             }
                         ],
-                        labels:
-                        [
-                            'Open',
-                            'Closed',
-                            'Pending',
-                        ],
+                        labels: [<?php echo join(', ', $graphLabels); ?>],
                     },
                     options:
                     {
                         backgroundColor:
                         [
-                            '#000',
-                            '#fff',
-                            '#f00',
+                             '#60bd68',
+                             '#5da5da',
+                             '#f15854',
                         ]
                     },
                 });
@@ -129,7 +111,7 @@ $connection->close();
         <?php include(INCLUDE_HEADER) ?>
         <nav role="navigation" class="padding-small clearfix">
             <div class="float-left">
-                <a href="/overview/">&larr; Return to Overview</a>
+                <a href="/analytics/">&larr; Return to Analytics</a>
             </div>
             <div class="float-right">
             </div>
@@ -137,22 +119,13 @@ $connection->close();
         <div class="content-width clearfix">
             <div class="padding-small">
                 <div class="bg-white shadow vpadding-mid text-centered">
-                    <h1>Select a Graph to View</h1>
-                    <div class="column-container">
-                        <div class="column l6 s12">
-                            <p><a href="ticket-status.php"><button class="analytics-button">Ticket Status Ratio</button></a></p>
-                        </div>
-                        <div class="column l6 s12">
-                            <p><a href="helpdesk-vs-specialist.php"><button class="analytics-button">Helpdesk vs Specialist</button></a></p>
-                        </div>
-                    </div>
-                    <div class="column-container">
-                        <div class="column l6 s12">
-                            <p><a href="solve-time.php"><button class="analytics-button">Ticket Solve Time</button></a></p>
-                        </div>
-                        <div class="column l6 s12">
-                            
-                        </div>
+                    <h1>Solve Times of Tickets</h1>
+                    <p>
+                        <strong>Average Solve Time:</strong>
+                        <?= $averageSolveTime ?> hours
+                    </p>
+                    <div class="canvas-container vpadding-mid">
+                        <canvas class="analytics-canvas" width="250" height="250"></canvas>
                     </div>
                 </div>
             </div>
