@@ -2,7 +2,7 @@
 
 require ($_SERVER['DOCUMENT_ROOT'] . "/resources/page/page.php");
 
-include('get-ticket.php');
+include(ROOT . '/resources/tickets/get-ticket-information.php');
 
 if (!isset($ticket))
 {
