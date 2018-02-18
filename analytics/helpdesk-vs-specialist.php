@@ -6,7 +6,7 @@ require_once(ROOT . '/resources/page/utils/database.php');
 
 if (!$connection) return;
 
-$sql = 'SELECT AssignedSpecialist, ResolutionID FROM Tickets';
+$sql = 'SELECT Resolutions.EmployeeID, Employees.JobTitle FROM Resolutions, Employees WHERE Resolutions.EmployeeID=Employees.EmployeeID';
 
 $result = $connection->query($sql);
 
@@ -17,14 +17,8 @@ $specialist = 0;
 
 while ($ticket = $result->fetch_assoc())
 {
-    if ($ticket['ResolutionID'] !== null && $ticket['AssignedSpecialist'] == null)
-    {
-        $helpdesk++;
-    }
-    else if ($ticket['AssignedSpecialist'] !== null && $ticket['ResolutionID'] !== null)
-    {
-        $specialist++;
-    }
+    if ($ticket['JobTitle'] === 'IT Specialist') $specialist++;
+    else $helpdesk ++;
 }
 
 $connection->close();
