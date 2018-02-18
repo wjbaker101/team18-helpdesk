@@ -103,7 +103,7 @@ if (!isset($ticket))
                         <p>
                             <strong>Hardware Serial ID:</strong>
                             <span><?= $ticket['HardwareSerialID'] ?></span>
-                            <span style="color:#4e4">&#9745;</span>
+                            <?= $osLicense ?>
                         </p>
                         <?php } ?>
                         <?php if ($ticket['OperatingSystemID'] !== null) { ?>
