@@ -103,18 +103,19 @@ if (!isset($ticket))
                         <p>
                             <strong>Hardware Serial ID:</strong>
                             <span><?= $ticket['HardwareSerialID'] ?></span>
+                            <span style="color:#4e4">&#9745;</span>
                         </p>
                         <?php } ?>
                         <?php if ($ticket['OperatingSystemID'] !== null) { ?>
                         <p>
                             <strong>Operating System:</strong>
-                            <span><?= $ticket['OS_Name'] ?></span>
+                            <span><?= $ticket['OperatingSystemID'] ?></span>
                         </p>
                         <?php } ?>
-                        <?php if ($ticket['Software_Name'] !== null) { ?>
+                        <?php if ($ticket['SoftwareID'] !== null) { ?>
                         <p>
                             <strong>Software:</strong>
-                            <span><?= $ticket['Software_Name'] ?></span>
+                            <span><?= $ticket['SoftwareID'] ?></span>
                         </p>
                         <?php } ?>
                     </div>
