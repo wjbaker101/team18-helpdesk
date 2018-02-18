@@ -146,6 +146,14 @@ $connection->close();
                             <p><a href="helpdesk-vs-specialist.php"><button class="analytics-button">Helpdesk vs Specialist</button></a></p>
                         </div>
                     </div>
+                    <div class="column-container">
+                        <div class="column l6 s12">
+                            <p><a href="solve-time.php"><button class="analytics-button">Ticket Solve Time</button></a></p>
+                        </div>
+                        <div class="column l6 s12">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
