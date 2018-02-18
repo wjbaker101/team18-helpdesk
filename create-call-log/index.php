@@ -2,7 +2,7 @@
 
 require ($_SERVER['DOCUMENT_ROOT'] . "/resources/page/page.php");
 
-include('get-ticket.php');
+include(ROOT . '/resources/tickets/get-ticket-information.php');
 
 if ($employee === null)
 {
@@ -68,6 +68,22 @@ include('create-log.php');
                 width: 100%;
                 height: 150px;
             }
+            
+            .employee-list-container
+            {
+                height: 300px;
+                margin: 15px 0;
+                position: relative;
+                border: 1px solid #ccc;
+                overflow-y: scroll;
+            }
+            
+            .licensed
+            {
+                color: #4e4;
+                background-color: #000;
+                padding: 0 0.5em;
+            }
         </style>
         
         <?php include(INCLUDE_SCRIPTS) ?>
@@ -105,7 +121,7 @@ include('create-log.php');
             
             const initEmployeeSearch = () =>
             {
-                const input = document.querySelector('.search-employee-input');
+                const input = document.querySelector('.caller-name-input');
                 
                 input.addEventListener('input', () =>
                 {
@@ -160,18 +176,21 @@ include('create-log.php');
                             <p>
                                 <strong>Hardware Serial ID:</strong>
                                 <span><?= $ticket['HardwareSerialID'] ?></span>
+                                <?= $hardwareLicense ?>
                             </p>
                             <?php } ?>
                             <?php if ($ticket['OperatingSystemID'] !== null) { ?>
                             <p>
                                 <strong>Operating System:</strong>
-                                <span><?= $ticket['OS_Name'] ?></span>
+                                <span><?= $ticket['OperatingSystemID'] ?> v<?= $ticket['OperatingSystemVersion'] ?></span>
+                                <?= $osLicense ?>
                             </p>
                             <?php } ?>
-                            <?php if ($ticket['Software_Name'] !== null) { ?>
+                            <?php if ($ticket['SoftwareID'] !== null) { ?>
                             <p>
                                 <strong>Software:</strong>
-                                <span><?= $ticket['Software_Name'] ?></span>
+                                <span><?= $ticket['SoftwareID'] ?> v<?= $ticket['SoftwareVersion'] ?></span>
+                                <?= $softwareLicense ?>
                             </p>
                             <?php } ?>
                         </div>
@@ -208,23 +227,22 @@ include('create-log.php');
                             <h2>Create a New Call Log</h2>
                         </div>
                     </div>
-                    <div class="bg-white shadow section">
+                    <div class="bg-white shadow padding-small section">
                         <div class="content-section padding-small">
-                            <h2><abbr title="Details about the employee calling.">Caller Details</abbr></h2>
+                            <h2>Caller Details</h2>
                             <div class="column-container">
                                 <div class="column l6 s12 v-content-section">
-                                    <h4><abbr title="Employee ID of the employee.">Employee ID</abbr></h4>
+                                    <h4>Employee ID</h4>
                                     <input class="caller-id-input" type="text" name="caller-id" value="<?php if (isset($_POST['caller-id'])) echo htmlspecialchars($_POST['caller-id']); ?>">
                                     <?= $messages->callerID ?>
-                                    <h4><abbr title="Telephone number of the incoming call.">Telephone Number</abbr></h4>
+                                    <h4>Telephone Number</h4>
                                     <input class="telephone-input" type="text" name="telephone-number" value="<?php if (isset($_POST['telephone-number'])) echo htmlspecialchars($_POST['telephone-number']); ?>">
+                                    <?= $messages->telephoneNumber ?>
                                 </div>
                                 <div class="column l6 s12 v-content-section">
                                     <h4>Search Employee Name</h4>
-                                    <input class="search-employee-input" type="text">
-                                    <div class="employee-list-container">
-                                        
-                                    </div>
+                                    <input class="caller-name-input" type="text">
+                                    <div class="employee-list-container caller-employees"></div>
                                 </div>
                             </div>
                         </div>

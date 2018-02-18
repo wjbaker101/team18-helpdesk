@@ -70,7 +70,7 @@ include('create.php');
             
             .employee-list-container
             {
-                height: 200px;
+                height: 300px;
                 margin: 15px 0;
                 position: relative;
                 border: 1px solid #ccc;

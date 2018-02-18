@@ -15,6 +15,7 @@ Ticket.*,
 Resolution.*,
 
 Hardware.HardwareSerialID AS Hardware_ID,
+Hardware.Name AS Hardware_Name,
 
 OperatingSystems.Name AS OS_Name,
 OperatingSystems.DeveloperCompany AS OS_Developer,
@@ -96,7 +97,7 @@ $hardwareLicense = '';
 
 if ($ticket['Hardware_ID'] !== null)
 {
-    $hardwareLicense = "<br><span class=\"licensed\">&#9745;</span> Hardware Found";
+    $hardwareLicense = "<br><span class=\"licensed\">&#9745;</span> {$ticket['Hardware_Name']}";
 }
 
 $osLicense = '';

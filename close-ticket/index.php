@@ -31,6 +31,13 @@ include('close.php');
                 min-height: 150px;
                 resize: vertical;
             }
+            
+            .licensed
+            {
+                color: #4e4;
+                background-color: #000;
+                padding: 0 0.5em;
+            }
         </style>
         
         <?php include(INCLUDE_SCRIPTS) ?>
@@ -42,7 +49,7 @@ include('close.php');
         <?php include(INCLUDE_HEADER) ?>
         <nav role="navigation" class="padding-small clearfix">
             <div class="float-left">
-                <a href="/view-tickets/">&larr; Return to Tickets Overview</a>
+                <a href="/ticket/?id=<?php echo htmlspecialchars($_GET['id']); ?>">&larr; Return to Ticket <?php echo htmlspecialchars($_GET['id']); ?></a>
             </div>
             <div class="float-right">
             </div>
@@ -73,18 +80,21 @@ include('close.php');
                         <p>
                             <strong>Hardware Serial ID:</strong>
                             <span><?= $ticket['HardwareSerialID'] ?></span>
+                            <?= $hardwareLicense ?>
                         </p>
                         <?php } ?>
                         <?php if ($ticket['OperatingSystemID'] !== null) { ?>
                         <p>
                             <strong>Operating System:</strong>
-                            <span><?= $ticket['OS_Name'] ?></span>
+                            <span><?= $ticket['OperatingSystemID'] ?> v<?= $ticket['OperatingSystemVersion'] ?></span>
+                            <?= $osLicense ?>
                         </p>
                         <?php } ?>
-                        <?php if ($ticket['Software_Name'] !== null) { ?>
+                        <?php if ($ticket['SoftwareID'] !== null) { ?>
                         <p>
                             <strong>Software:</strong>
-                            <span><?= $ticket['Software_Name'] ?></span>
+                            <span><?= $ticket['SoftwareID'] ?> v<?= $ticket['SoftwareVersion'] ?></span>
+                            <?= $softwareLicense ?>
                         </p>
                         <?php } ?>
                     </div>
