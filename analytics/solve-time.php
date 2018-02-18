@@ -21,9 +21,10 @@ while ($ticket = $result->fetch_assoc())
     
     $difference = $closeDate->diff($entryDate);
     
-    $diff = $difference->format('%i');
+    $hours = $difference->days * 24;
+    $hours += $difference->h;
     
-    $graphValues[] = $diff;
+    $graphValues[] = $hours;
     
     $graphLabels[] = '"Ticket ' . $ticket['TicketID'] . '"';
 }
@@ -85,7 +86,7 @@ $connection->close();
                         datasets:
                         [
                             {
-                                label: "Solve Time (Minutes)",
+                                label: "Solve Time (Hours)",
                                 data: [<?php echo join(', ', $graphValues); ?>],
                                 backgroundColor: '#5da5da',
                             }
@@ -121,7 +122,7 @@ $connection->close();
                     <h1>Solve Times of Tickets</h1>
                     <p>
                         <strong>Average Solve Time:</strong>
-                        <?= $averageSolveTime ?> minutes
+                        <?= $averageSolveTime ?> hours
                     </p>
                     <div class="canvas-container vpadding-mid">
                         <canvas class="analytics-canvas" width="250" height="250"></canvas>
