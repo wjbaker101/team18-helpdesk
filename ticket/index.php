@@ -2,7 +2,7 @@
 
 require ($_SERVER['DOCUMENT_ROOT'] . "/resources/page/page.php");
 
-include('get-ticket.php');
+include(ROOT . '/resources/tickets/get-ticket-information.php');
 
 if (!isset($ticket))
 {
@@ -22,7 +22,14 @@ if (!isset($ticket))
         
         <?php include(INCLUDE_STYLE) ?>
         
-        <style></style>
+        <style>
+            .licensed
+            {
+                color: #4e4;
+                background-color: #000;
+                padding: 0 0.5em;
+            }
+        </style>
         
         <?php include(INCLUDE_SCRIPTS) ?>
         
@@ -105,18 +112,21 @@ if (!isset($ticket))
                         <p>
                             <strong>Hardware Serial ID:</strong>
                             <span><?= $ticket['HardwareSerialID'] ?></span>
+                            <?= $hardwareLicense ?>
                         </p>
                         <?php } ?>
                         <?php if ($ticket['OperatingSystemID'] !== null) { ?>
                         <p>
                             <strong>Operating System:</strong>
-                            <span><?= $ticket['OS_Name'] ?></span>
+                            <span><?= $ticket['OperatingSystemID'] ?></span>
+                            <?= $osLicense ?>
                         </p>
                         <?php } ?>
-                        <?php if ($ticket['Software_Name'] !== null) { ?>
+                        <?php if ($ticket['SoftwareID'] !== null) { ?>
                         <p>
                             <strong>Software:</strong>
-                            <span><?= $ticket['Software_Name'] ?></span>
+                            <span><?= $ticket['SoftwareID'] ?> v<?= $ticket['SoftwareVersion'] ?></span>
+                            <?= $softwareLicense ?>
                         </p>
                         <?php } ?>
                     </div>

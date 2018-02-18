@@ -14,7 +14,7 @@ Ticket.*,
 
 Resolution.*,
 
-Hardware.*,
+Hardware.HardwareSerialID AS Hardware_ID,
 
 OperatingSystems.Name AS OS_Name,
 OperatingSystems.DeveloperCompany AS OS_Developer,
@@ -43,8 +43,8 @@ Caller.TelephoneNumber AS Caller_TelephoneNumber
 FROM Tickets AS Ticket
 
 LEFT JOIN Hardware ON Ticket.HardwareSerialID=Hardware.HardwareSerialID
-LEFT JOIN OperatingSystems ON OperatingSystems.OperatingSystemID=Ticket.OperatingSystemID
-LEFT JOIN Software ON Software.SoftwareID=Ticket.SoftwareID
+LEFT JOIN OperatingSystems ON OperatingSystems.Name=Ticket.OperatingSystemID
+LEFT JOIN Software ON Software.Name=Ticket.SoftwareID
 LEFT JOIN Resolutions AS Resolution ON Ticket.ResolutionID=Resolution.ResolutionID
 LEFT JOIN Employees AS HelpdeskOperator ON Ticket.HelpdeskOperator=HelpdeskOperator.EmployeeID
 LEFT JOIN Employees AS AssignedSpecialist ON Ticket.AssignedSpecialist=AssignedSpecialist.EmployeeID
@@ -83,6 +83,27 @@ switch ($ticket['Priority'])
     case 3:
         $ticketPriority = 'urgent';
         break;
+}
+
+$softwareLicense = '';
+
+if ($ticket['Software_Name'] !== null)
+{
+    $softwareLicense = "<br><span class=\"licensed\">&#9745;</span> <span>v{$ticket['Software_LastestVersion']}</span>";
+}
+
+$hardwareLicense = '';
+
+if ($ticket['Hardware_ID'] !== null)
+{
+    $hardwareLicense = "<br><span class=\"licensed\">&#9745;</span> Hardware Found";
+}
+
+$osLicense = '';
+
+if ($ticket['OS_Name'] !== null)
+{
+    $osLicense = "<br><span class=\"licensed\">&#9745;</span> <span>v{$ticket['OS_LatestVersion']}</span>";
 }
 
 ?>
