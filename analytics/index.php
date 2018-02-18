@@ -80,49 +80,7 @@ $connection->close();
         
         <?php include(INCLUDE_SCRIPTS) ?>
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-        
-        <script>
-            window.addEventListener('load', () =>
-            {
-                const graphics = document.querySelector('.analytics-canvas').getContext('2d');
-
-                const chart = new Chart(graphics,
-                {
-                    type: 'pie',
-                    data:
-                    {
-                        datasets:
-                        [
-                            {
-                                data: [<?= $open ?>, <?= $closed ?>, <?= $pending ?>],
-                                backgroundColor:
-                                [
-                                    '#60bd68',
-                                    '#5da5da',
-                                    '#f15854',
-                                ]
-                            }
-                        ],
-                        labels:
-                        [
-                            'Open',
-                            'Closed',
-                            'Pending',
-                        ],
-                    },
-                    options:
-                    {
-                        backgroundColor:
-                        [
-                            '#000',
-                            '#fff',
-                            '#f00',
-                        ]
-                    },
-                });
-            });
-        </script>
+        <script></script>
     </head>
     
     <body>
