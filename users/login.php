@@ -2,6 +2,15 @@
 
 require ($_SERVER['DOCUMENT_ROOT'] . "/resources/page/page.php");
 
+// Checks whether an employee is logged in
+// Redirects to overview page
+// Prevents Further code from being ran
+if ($employee !== null)
+{
+    header ('Location: /overview/');
+    exit;
+}
+
 include('log-in.php');
 
 ?>
