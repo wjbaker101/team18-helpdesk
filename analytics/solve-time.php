@@ -5,30 +5,39 @@ require_once(ROOT . '/resources/page/utils/database.php');
 
 if (!$connection) return;
 
+// Select all closed tickets from the database
 $sql = "SELECT TicketID, EntryDate, CloseDate FROM Tickets, Resolutions WHERE Tickets.ResolutionID=Resolutions.ResolutionID ORDER BY EntryDate ASC";
 
 $result = $connection->query($sql);
 
 if (!$result || $result->num_rows === 0) return;
 
+// Create arrays to store the data
 $graphValues = array();
 $graphLabels = array();
 
+// Loops through each of the tickets
 while ($ticket = $result->fetch_assoc())
 {
+    // Gets the entry date and close date of the ticket
     $entryDate = new DateTime($ticket['EntryDate']);
     $closeDate = new DateTime($ticket['CloseDate']);
     
+    // Calculate the different in time
     $difference = $closeDate->diff($entryDate);
     
+    // Calculate the number of hours
     $hours = $difference->days * 24;
     $hours += $difference->h;
     
+    // Add hours to the array
     $graphValues[] = $hours;
     
+    // Add the ticket ID to the labels
     $graphLabels[] = '"Ticket ' . $ticket['TicketID'] . '"';
 }
 
+// Calculate the average number of hours to solve a ticket
 $averageSolveTime = array_sum($graphValues) / count($graphValues);
 
 $connection->close();
