@@ -6,26 +6,34 @@ require_once(ROOT . '/resources/page/utils/database.php');
 
 if (!$connection) return;
 
+// Select all tickets from the database
 $sql = 'SELECT AssignedSpecialist, ResolutionID FROM Tickets';
 
 $result = $connection->query($sql);
 
 if (!$result || $result->num_rows === 0) return;
 
+// Create variables to store the status counts
 $closed = 0;
 $open = 0;
 $pending = 0;
 
+// Loop through each ticket
 while ($ticket = $result->fetch_assoc())
 {
+    // Check whether the ticket is closed
     if ($ticket['ResolutionID'] !== null)
     {
         $closed++;
     }
+    
+    // Check whether the ticket is open
     else if ($ticket['AssignedSpecialist'] !== null)
     {
         $open++;
     }
+    
+    // Check whether the ticket is pending
     else
     {
         $pending++;

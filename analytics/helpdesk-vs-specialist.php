@@ -6,18 +6,22 @@ require_once(ROOT . '/resources/page/utils/database.php');
 
 if (!$connection) return;
 
+// Select all employees from closed tickets
 $sql = 'SELECT Resolutions.EmployeeID, Employees.JobTitle FROM Resolutions, Employees WHERE Resolutions.EmployeeID=Employees.EmployeeID';
 
 $result = $connection->query($sql);
 
 if (!$result || $result->num_rows === 0) return;
 
+// Create variables to store the number of helpdesk or IT specialists found from the SQL query
 $helpdesk = 0;
 $specialist = 0;
 
-while ($ticket = $result->fetch_assoc())
+// Loop through each employee
+while ($employee = $result->fetch_assoc())
 {
-    if ($ticket['JobTitle'] === 'IT Specialist') $specialist++;
+    // Increment variables depending on the job title of the employee
+    if ($employee['JobTitle'] === 'IT Specialist') $specialist++;
     else $helpdesk ++;
 }
 
