@@ -99,8 +99,6 @@ if (!isset($ticket))
                             <strong>Priority:</strong>
                             <i class="priority-<?= $ticketPriority ?>"></i>
                         </p>
-                        <?php $buttonText = ($ticket['AssignedSpecialist'] === null) ? 'Assign Specialist' : 'Reassign Specialist' ?>
-                        <p><a href="/assign-specialist/?id=<?= $ticket['TicketID'] ?>"><button><?= $buttonText ?></button></a></p>
                     </div>
                     <div class="content-section padding-small">
                         <p>
@@ -185,6 +183,8 @@ if (!isset($ticket))
                             <strong>Contact:</strong>
                             <span><?= $ticket['AssignedSpecialist_TelephoneNumber'] ?></span>
                         </p>
+                        <?php $buttonText = ($ticket['AssignedSpecialist'] === null) ? 'Assign Specialist' : 'Reassign Specialist' ?>
+                        <p><a href="/assign-specialist/?id=<?= $ticket['TicketID'] ?>"><button><?= $buttonText ?></button></a></p>
                     </div>
                     <?php } ?>
                 </div>
