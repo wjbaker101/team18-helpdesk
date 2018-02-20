@@ -83,10 +83,23 @@ include('create.php');
         <script src="/resources/scripts/employee-search.js" defer></script>
         
         <script>
+            const onSpecialistToggle = (e) =>
+            {
+                document.querySelector('.specialist-info-details').classList.toggle('visible', e.target.checked);
+            };
+            
+            const onResolutionToggle = (e) =>
+            {
+                document.querySelector('.close-ticket-details').classList.toggle('visible', e.target.checked);
+            };
+            
             window.addEventListener('load', () =>
             {
                 new EmployeeSearch('.caller-name-input', '.caller-employees');
                 new EmployeeSearch('.specialist-name-input', '.specialist-employees', true);
+                
+                document.querySelector('.specialist-info-enabled').addEventListener('change', onSpecialistToggle);
+                document.querySelector('.close-ticket-enabled').addEventListener('change', onResolutionToggle);
             });
         </script>
     </head>
