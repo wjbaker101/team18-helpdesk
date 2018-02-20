@@ -67,10 +67,8 @@ if (!$result)
     return;
 }
 
-$ticketID = $connection->insert_id;
-
 $connection->close();
 
-header("Location: /ticket/?id={$ticketID}");
+header("Location: /ticket/?id={$_POST['ticket-id']}");
 
 ?>
