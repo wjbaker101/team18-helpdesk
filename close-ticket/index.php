@@ -54,8 +54,8 @@ include('close.php');
             <div class="float-right">
             </div>
         </nav>
-        <div class="content-width clearfix">
-            <div class="sidebar float-left padding-small">
+        <div class="content-width column-container">
+            <div class="column l4 m12 padding-small">
                 <div class="bg-white shadow">
                     <div class="content-section padding-small">
                         <h1>Ticket <?= $ticket['TicketID'] ?></h1>
@@ -122,7 +122,7 @@ include('close.php');
                     <?php } ?>
                 </div>
             </div>
-            <div class="main-content padding-small">
+            <div class="column l8 m12 padding-small">
                 <div class="bg-white shadow section">
                     <div class="content-section padding-small">
                         <h2>Resolution Description:</h2>

@@ -107,10 +107,10 @@ include('create-log.php');
             <div class="float-right">
             </div>
         </nav>
-        <div class="content-width clearfix">
+        <div class="content-width column-container">
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?id=<?php echo htmlspecialchars($_GET['id']); ?>" method="post">
                 <input style="display:none" type="text" value="<?php if (isset($_GET['id'])) echo $_GET['id'] ?>" name="ticket-id">
-                <div class="sidebar float-left padding-small">
+                <div class="column l4 m12 padding-small">
                     <div class="bg-white shadow">
                         <div class="content-section padding-small">
                             <h1>Ticket <?= $ticket['TicketID'] ?></h1>
@@ -180,7 +180,7 @@ include('create-log.php');
                         </div>
                     </div>
                 </div>
-                <div class="main-content padding-small">
+                <div class="column l8 m12 padding-small">
                     <div class="bg-white shadow section">
                         <div class="content-section padding-small">
                             <h2>Create a New Call Log</h2>
