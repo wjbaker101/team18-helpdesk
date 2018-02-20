@@ -62,6 +62,11 @@ $nextPageNumber = $pageNumber + 1;
                 display: block;
                 overflow-x: auto;
             }
+            
+            .action-icon
+            {
+                background-color: #000;
+            }
         </style>
         
         <?php include(INCLUDE_SCRIPTS) ?>
