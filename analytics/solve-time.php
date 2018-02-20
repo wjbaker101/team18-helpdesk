@@ -38,7 +38,7 @@ while ($ticket = $result->fetch_assoc())
 }
 
 // Calculate the average number of hours to solve a ticket
-$averageSolveTime = number_format(array_sum($graphValues) / count($graphValues));
+$averageSolveTime = number_format(array_sum($graphValues) / count($graphValues), 2);
 
 $connection->close();
 
