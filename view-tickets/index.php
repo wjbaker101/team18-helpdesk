@@ -55,6 +55,13 @@ $nextPageNumber = $pageNumber + 1;
                 font-weight: bold;
                 color: #44e;
             }
+            
+            table
+            {
+                border: 0;
+                display: block;
+                overflow-x: auto;
+            }
         </style>
         
         <?php include(INCLUDE_SCRIPTS) ?>
@@ -122,12 +129,12 @@ $nextPageNumber = $pageNumber + 1;
             const initPageButtons = () =>
             {
                 const leftButton = $('.page-left');
-                const leftButton = $('.page-right');
+                const rightButton = $('.page-right');
                 
                 const pageNumberElement = $('.page-number');
                 
                 // Decrement the page number when the left button is clicked
-                leftButton.addEventListener('click', () =>
+                leftButton.click(() =>
                 {
                     incrementPageNumber(-1);
                     
@@ -137,7 +144,7 @@ $nextPageNumber = $pageNumber + 1;
                 });
                 
                 // Increment the page number when the right button is clicked
-                rightButton.addEventListener('click', () =>
+                rightButton.click(() =>
                 {
                     incrementPageNumber(1);
                     
@@ -172,8 +179,8 @@ $nextPageNumber = $pageNumber + 1;
             <div class="float-right">
             </div>
         </nav>
-        <div class="content-width clearfix">
-            <div class="sidebar float-left padding-small">
+        <div class="content-width column-container">
+            <div class="column l4 m12 padding-small">
                 <div class="section bg-white shadow">
                     <div class="content-section padding-small">
                         <h2>Sort and Filter</h2>
@@ -217,7 +224,7 @@ $nextPageNumber = $pageNumber + 1;
                     </div>
                 </div>
             </div>
-            <div class="main-content padding-small">
+            <div class="column l8 m12 padding-small">
                 <div class="padding-small bg-white shadow">
                     <h2>Tickets</h2>
                     <table>
