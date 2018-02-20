@@ -50,7 +50,7 @@ if (!isset($ticket))
                             {
                                 const response = http.responseText;
 
-                                document.querySelector('.delete-ticket-message').innerHTML = response;
+                                $('.delete-ticket-message').html(response);
                                 
                                 window.location.href = '/view-tickets/';
                             }
@@ -67,9 +67,7 @@ if (!isset($ticket))
             
             window.addEventListener('load', () =>
             {
-                const deleteTicketButton = document.querySelector('.delete-ticket-button');
-                
-                deleteTicketButton.addEventListener('click', onDeleteTicketButtonClick);
+                $('.delete-ticket-button').click(onDeleteTicketButtonClick);
             });
         </script>
     </head>
