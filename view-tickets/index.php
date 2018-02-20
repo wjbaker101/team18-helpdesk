@@ -60,36 +60,39 @@ $nextPageNumber = $pageNumber + 1;
         <?php include(INCLUDE_SCRIPTS) ?>
         
         <script>
-            'use strict';
-            
             let pageNumber = 1; // Current page number
 
             /**
              * Requests the server for a list of tickets using options from the sorting and filter.
              */
-            var getTickets = function getTickets() {
+            const getTickets = () =>
+            {
                 
                 // Defines the options
-                var options = {
-                    sort: document.querySelector('[name=sorting]:checked').value,
-                    descendingOrder: document.querySelector('[name=order]').checked,
-                    showPending: document.querySelector('[name=show-pending]').checked,
-                    showOpen: document.querySelector('[name=show-open]').checked,
-                    showClosed: document.querySelector('[name=show-closed]').checked,
+                const options =
+                {
+                    sort: $('[name=sorting]:checked').val(),
+                    descendingOrder: $('[name=order]')[0].checked,
+                    showPending: $('[name=show-pending]')[0].checked,
+                    showOpen: $('[name=show-open]')[0].checked,
+                    showClosed: $('[name=show-closed]')[0].checked,
                     page: pageNumber,
                     specialist: <?php echo ($employee['JobTitle'] === 'IT Specialist') ? 'true' : 'false'; ?>,
                     specialistID: <?= $employee['EmployeeID'] ?>,
                 };
                 
-                var http = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
+                const http = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
 
                 // Displays tickets when response has been recieved
-                http.onreadystatechange = function () {
-                    if (http.readyState === XMLHttpRequest.DONE) {
-                        if (http.status === 200) {
-                            var response = http.responseText;
+                http.onreadystatechange = () =>
+                {
+                    if (http.readyState === XMLHttpRequest.DONE)
+                    {
+                        if (http.status === 200)
+                        {
+                            const response = http.responseText;
 
-                            document.querySelector('.tickets-container').innerHTML = response;
+                            $('.tickets-container').html(response);
                         }
                     }
                 };
@@ -118,41 +121,42 @@ $nextPageNumber = $pageNumber + 1;
              */
             const initPageButtons = () =>
             {
-                const leftButton = document.querySelector('.page-left');
-                const rightButton = document.querySelector('.page-right');
+                const leftButton = $('.page-left');
+                const leftButton = $('.page-right');
                 
-                const pageNumberElement = document.querySelector('.page-number');
+                const pageNumberElement = $('.page-number');
                 
+                // Decrement the page number when the left button is clicked
                 leftButton.addEventListener('click', () =>
                 {
                     incrementPageNumber(-1);
                     
                     getTickets(pageNumber);
                     
-                    pageNumberElement.innerHTML = `Page ${pageNumber}`;
+                    pageNumberElement.html(`Page ${pageNumber}`);
                 });
                 
+                // Increment the page number when the right button is clicked
                 rightButton.addEventListener('click', () =>
                 {
                     incrementPageNumber(1);
                     
                     getTickets(pageNumber);
                     
-                    pageNumberElement.innerHTML = `Page ${pageNumber}`;
+                    pageNumberElement.html(`Page ${pageNumber}`);
                 });
             };
 
-            window.addEventListener('load', () => getTickets());
+            window.addEventListener('load', getTickets);
 
             /**
              * Loads the input elements that should refresh the ticket list.
              */
-            window.addEventListener('load', function () {
-                var ticketInputs = [...document.querySelectorAll('.tickets-input')];
-
-                ticketInputs.forEach(function (input) {
-                    input.addEventListener('change', getTickets);
-                });
+            window.addEventListener('load', () =>
+            {
+                const ticketInputs = $('.tickets-input');
+                
+                ticketInputs.change(getTickets);
                 
                 initPageButtons();
             });

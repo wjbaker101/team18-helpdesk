@@ -93,7 +93,7 @@ $connection->close();
         <script>
             window.addEventListener('load', () =>
             {
-                const graphics = document.querySelector('.analytics-canvas').getContext('2d');
+                const graphics = $('.analytics-canvas')[0].getContext('2d');
 
                 const chart = new Chart(graphics,
                 {

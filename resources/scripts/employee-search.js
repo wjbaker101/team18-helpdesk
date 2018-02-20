@@ -2,8 +2,8 @@ class EmployeeSearch
 {
     constructor(inputElementSelector, outputElementSelector, isOnlySpecialist = false)
     {
-        this.inputElement = document.querySelector(inputElementSelector);
-        this.outputElement = document.querySelector(outputElementSelector);
+        this.inputElement = $(inputElementSelector);
+        this.outputElement = $(outputElementSelector);
         
         this.isOnlySpecialist = isOnlySpecialist;
         
@@ -16,9 +16,9 @@ class EmployeeSearch
     {
         this.inputElement.addEventListener('input', () =>
         {
-            this.outputElement.innerHTML = '';
+            this.outputElement.html('');
             
-            if (this.inputElement.value.length === 0) return;
+            if (this.inputElement.val().length === 0) return;
             
             if (this.isRequesting) return;
             
@@ -40,14 +40,14 @@ class EmployeeSearch
                 {
                     const response = http.responseText;
 
-                    this.outputElement.innerHTML = response;
+                    this.outputElement.html(response);
 
                     this.isRequesting = false;
                 }
             }
         };
         
-        const searchTerm = this.inputElement.value.trim().toLowerCase();
+        const searchTerm = this.inputElement.val().trim().toLowerCase();
         
         const parameters =
         [

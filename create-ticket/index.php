@@ -85,12 +85,12 @@ include('create.php');
         <script>
             const onSpecialistToggle = (e) =>
             {
-                document.querySelector('.specialist-info-details').classList.toggle('visible', e.target.checked);
+                $('.specialist-info-details').toggleClass('visible', e.target.checked);
             };
             
             const onResolutionToggle = (e) =>
             {
-                document.querySelector('.close-ticket-details').classList.toggle('visible', e.target.checked);
+                $('.close-ticket-details').toggleClass('visible', e.target.checked);
             };
             
             window.addEventListener('load', () =>
@@ -98,8 +98,8 @@ include('create.php');
                 new EmployeeSearch('.caller-name-input', '.caller-employees');
                 new EmployeeSearch('.specialist-name-input', '.specialist-employees', true);
                 
-                document.querySelector('.specialist-info-enabled').addEventListener('change', onSpecialistToggle);
-                document.querySelector('.close-ticket-enabled').addEventListener('change', onResolutionToggle);
+                $('.specialist-info-enabled').change(onSpecialistToggle);
+                $('.close-ticket-enabled').change(onResolutionToggle);
             });
         </script>
     </head>
